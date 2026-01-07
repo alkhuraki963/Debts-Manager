@@ -143,6 +143,9 @@ namespace DebtsManagerBusinessLayer
             }
         }
 
-
+        public static DataTable Search(string text)
+        {
+            return clsPersonDataAccess.Search(text);
+        }
     }
 }

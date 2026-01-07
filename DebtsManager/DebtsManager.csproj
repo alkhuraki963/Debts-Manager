@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>debts_manager.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -127,6 +130,17 @@
     <None Include="Resources\Edit.png" />
     <None Include="Resources\icons8-amount-32.png" />
     <None Include="Resources\accountant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="debts_manager.ico" />
+    <None Include="Resources\icons8-search-241.png" />
+    <None Include="Resources\icons8-about-24.png" />
+    <None Include="Resources\icons8-reports-24.png" />
+    <None Include="Resources\icons8-settings-24.png" />
+    <None Include="Resources\icons8-bill-24.png" />
+    <None Include="Resources\icons8-cash-24.png" />
+    <None Include="Resources\icons8-expense-24.png" />
+    <None Include="Resources\icons8-income-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

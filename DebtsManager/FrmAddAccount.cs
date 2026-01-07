@@ -13,32 +13,55 @@ namespace DebtsManager
 {
     public partial class FrmAddAccount : Form
     {
+        enMode Mode;
+        clsPerson Person;
         public FrmAddAccount()
         {
             InitializeComponent();
+            Mode = enMode.ADD;
+            Person = new clsPerson();
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        public FrmAddAccount(clsPerson Person)
         {
-
+            InitializeComponent();
+            Mode = enMode.UPDATE;
+            this.Person = Person;
         }
+
 
         private void FrmAddAccount_Load(object sender, EventArgs e)
         {
-
+            if (Mode == enMode.ADD) 
+            {
+                tbFullName.Clear();
+                tbEmail.Clear();
+                tbPhone.Clear();
+            }
+            else
+            {
+                if (Person == null)
+                {
+                    return;
+                }
+                tbFullName.Text = Person.FullName;
+                tbPhone.Text = Person.Phone;
+                tbEmail.Text = Person.Email;
+                this.Text = "تعديل حساب";
+                lblTitle.Text = "تعديل الحساب";
+            }
         }
 
-        private void btnAddAccount_Click(object sender, EventArgs e)
+        private void btnSaveAccount_Click(object sender, EventArgs e)
         {
             string FullName = tbFullName.Text;
             string Phone = tbPhone.Text;
             string Email = tbEmail.Text;
 
-            clsPerson Person = new clsPerson();
             Person.FullName = FullName;
             Person.Phone = Phone;
             Person.Email = Email;
             Person.Save();
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }

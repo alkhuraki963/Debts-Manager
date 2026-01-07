@@ -33,16 +33,31 @@ namespace DebtsManager
 
         private void _LoadBalance()
         {
-            lblBalance.Text = CurrentPerson.Balance.ToString(clsSettings.NumberFormat) + " " +clsSettings.CurrencySuffix;
+            decimal CurrentPersonBalance = clsPerson.FindAccount(CurrentPerson.Id).Balance;
+            if (CurrentPersonBalance < 0)
+            {
+                lblBalance.Text = (-CurrentPersonBalance).ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix + " لك";
+                lblBalance.BackColor = Color.Green;
+            }
+            else if (CurrentPersonBalance > 0) 
+            {
+                lblBalance.Text = CurrentPersonBalance.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix + " عليك";
+                lblBalance.BackColor = Color.Red;
+            }
+            else
+            {
+                lblBalance.Text =  "0 " + clsSettings.CurrencySuffix;
+                lblBalance.BackColor = Color.Blue;
+            }
         }
 
         private void _LoadDebtsForYou()
         {
             try
             {
-                DataTable dt = clsDebt.GetAllIncomeDebts(CurrentPerson.Id);
-                decimal IncomeDebts = Convert.ToDecimal(dt.Compute("SUM(Amount)", string.Empty));
-                lblForYou.Text = IncomeDebts.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
+                DataTable dt = clsDebt.GetAllOutcomeDebts(CurrentPerson.Id);
+                decimal OutcomeDebts = Convert.ToDecimal(dt.Compute("SUM(Amount)", string.Empty));
+                lblForYou.Text = OutcomeDebts.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
                 lblForYou.Refresh();
             }
             catch (Exception ex)
@@ -55,9 +70,9 @@ namespace DebtsManager
         {
             try
             {
-                DataTable dt = clsDebt.GetAllOutcomeDebts(CurrentPerson.Id);
-                decimal OutcomeDebts = Convert.ToDecimal(dt.Compute("SUM(Amount)", string.Empty));
-                lblOnYou.Text = OutcomeDebts.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
+                DataTable dt = clsDebt.GetAllIncomeDebts(CurrentPerson.Id);
+                decimal IncomeDebts = Convert.ToDecimal(dt.Compute("SUM(Amount)", string.Empty));
+                lblOnYou.Text = IncomeDebts.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
                 lblOnYou.Refresh();
             }
             catch (Exception ex)
@@ -112,7 +127,7 @@ namespace DebtsManager
             dgvDebts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDebts.RowHeadersVisible = false;
             dgvDebts.AllowUserToResizeRows = false;
-            dgvDebts.DefaultCellStyle.Font = new Font("Tahoma", 12);
+            dgvDebts.DefaultCellStyle.Font = new Font("El Messiri", 14);
             dgvDebts.EnableHeadersVisualStyles = false;
 
             // Format columns - wait until data is bound
@@ -252,8 +267,11 @@ namespace DebtsManager
         private void btnAddDebts_Click(object sender, EventArgs e)
         {
             FrmAddDebt Frm = new FrmAddDebt(CurrentPerson.Id);
-            Frm.ShowDialog();
-            _LoadDebts();
+
+            if(Frm.ShowDialog() == DialogResult.OK)
+            {
+                _LoadDebts();
+            }
         }
 
         private void FrmAccount_SizeChanged(object sender, EventArgs e)

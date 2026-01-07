@@ -32,11 +32,27 @@ namespace DebtsManager
             this.PersonId = personId;
         }
 
-        private void btnAddDebt_Click(object sender, EventArgs e)
+        private void btnAddOutcomeDebt_Click(object sender, EventArgs e)
         {
+            _AddDept(enDebtType.OUTCOME);
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnAddIncomeDebt_Click(object sender, EventArgs e)
+        {
+            _AddDept(enDebtType.INCOME);
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void _AddDept(enDebtType debtType)
+        {
+            _VerifyInput();
             this.Amount = Convert.ToDecimal(tbAmount.Text);
             this.Notes = tbNotes.Text;
             this.DebtDate = dtpDebtDate.Value;
+            this.DebtType = debtType;
 
             clsDebt debt = new clsDebt();
             debt.Amount = this.Amount;
@@ -45,19 +61,11 @@ namespace DebtsManager
             debt.DebtDate = this.DebtDate;
             debt.PersonID = PersonId;
             debt.Save();
-            this.Close();
         }
 
-        private void rbIncome_CheckedChanged(object sender, EventArgs e)
+        private void _VerifyInput()
         {
-            if (rbIncome.Checked)
-            {
-                this.DebtType = enDebtType.INCOME;
-            }
-            else
-            {
-                this.DebtType = enDebtType.OUTCOME;
-            }
+            
         }
     }
 }

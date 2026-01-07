@@ -9,3 +9,14 @@ C:\studing\My Projects\Windows Forms Projects\DebtsManagerBusinessLayer\bin\Debu
 C:\studing\My Projects\Windows Forms Projects\DebtsManagerBusinessLayer\obj\Debug\DebtsMan.0738143A.Up2Date
 C:\studing\My Projects\Windows Forms Projects\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerUtility.dll
 C:\studing\My Projects\Windows Forms Projects\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerUtility.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerBusinessLayer.dll
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerBusinessLayer.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerDataAccessLayer.dll
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerUtility.dll
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerDataAccessLayer.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\bin\Debug\DebtsManagerUtility.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\obj\Debug\DebtsManagerBusinessLayer.csproj.AssemblyReference.cache
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\obj\Debug\DebtsManagerBusinessLayer.csproj.CoreCompileInputs.cache
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\obj\Debug\DebtsMan.0738143A.Up2Date
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\obj\Debug\DebtsManagerBusinessLayer.dll
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerBusinessLayer\obj\Debug\DebtsManagerBusinessLayer.pdb

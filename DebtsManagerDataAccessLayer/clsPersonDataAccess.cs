@@ -214,6 +214,37 @@ namespace DebtsManagerDataAccessLayer
             return isFound;
         }
 
+        public static DataTable Search(string text)
+        {
+
+            DataTable dt = new DataTable();
+            SqlConnection sqlConnection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
+
+            string Query = "select * from Persons where fullname like @Text";
+            SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@Text","%" +  text + "%");
+            try
+            {
+                sqlConnection.Open();
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                //
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return dt;
+        }
+
         public static bool UpdatePerson(int id, string fullName, string phone, string email, decimal balance, bool isArchived, DateTime updatedAt)
         {
             int rowsAffected = 0;
