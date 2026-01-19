@@ -19,10 +19,11 @@ namespace DebtsManagerBusinessLayer
         public decimal Amount { get; set; }
         public enDebtType DebtType { get; set; }
         public DateTime DebtDate { get; set; }
-        public decimal BalanceChange { get;private set; }
+        public decimal BalanceChange { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
-        public int PersonID { get; set; }
+        public int CurrencyId { get; set; }
+        public int AccountId { get; set; }
 
         public clsDebt()
         {
@@ -35,75 +36,28 @@ namespace DebtsManagerBusinessLayer
             this.BalanceChange = decimal.Zero;
             this.CreatedAt = DateTime.Now;
             this.UpdatedAt = DateTime.Now;
-            this.PersonID = -1;
+            this.CurrencyId = -1;
+            this.AccountId = -1;
         }
-        private clsDebt(int id, string notes, decimal amount, enDebtType debtType, DateTime debtDate, decimal balanceChange,
-            DateTime createdAt, DateTime updatedAt, int personID)
+        private clsDebt(int Id, string Notes, decimal Amount, enDebtType DebtType, DateTime DebtDate, decimal BalanceChange,
+            DateTime CreatedAt, DateTime UpdatedAt, int CurrencyId, int AccountId)
         {
-            this.Id = id;
-            this.Notes = notes;
-            this.Amount = amount;
-            this.DebtType = debtType;
-            this.DebtDate = debtDate;
-            this.BalanceChange = balanceChange;
-            this.CreatedAt = createdAt;
-            this.UpdatedAt = updatedAt;
-            this.PersonID = personID;
+            this.Id = Id;
+            this.Notes = Notes;
+            this.Amount = Amount;
+            this.DebtType = DebtType;
+            this.DebtDate = DebtDate;
+            this.BalanceChange = BalanceChange;
+            this.CreatedAt = CreatedAt;
+            this.UpdatedAt = UpdatedAt;
+            this.AccountId = AccountId;
+            this.CurrencyId = CurrencyId;
             Mode = enMode.UPDATE;
         }
 
-
-        public static DataTable GetAllDebts(int personId)
+        public static DataTable GetAllDebts(int AccountId)
         {
-            return clsDebtDataAccess.GetAllDebts(personId);
-        }
-
-        public static DataTable GetAllIncomeDebts(int personId)
-        {
-            try
-            {
-                DataTable allDebts = GetAllDebts(personId);
-
-                DataTable incomeTable = allDebts.Clone();
-
-                DataRow[] incomeRows = allDebts.Select("DebtType = 'INCOME'");
-
-                foreach (DataRow row in incomeRows)
-                {
-                    incomeTable.ImportRow(row);
-                }
-
-                return incomeTable;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error in GetAllIncomeDebts for person {personId}: {ex.Message}");
-                return new DataTable();
-            }
-        }
-
-        public static DataTable GetAllOutcomeDebts(int personId)
-        {
-            try
-            {
-                DataTable allDebts = GetAllDebts(personId);
-
-                DataTable outcomeTable = allDebts.Clone();
-
-                DataRow[] outcomeRows = allDebts.Select("DebtType = 'OUTCOME'");
-
-                foreach (DataRow row in outcomeRows)
-                {
-                    outcomeTable.ImportRow(row);
-                }
-
-                return outcomeTable;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error in GetAllOutcomeDebts for person {personId}: {ex.Message}");
-                return new DataTable();
-            }
+            return clsDebtDataAccess.GetAllDebts(AccountId);
         }
 
         public static clsDebt FindDebt(int debtId)
@@ -116,12 +70,13 @@ namespace DebtsManagerBusinessLayer
             decimal BalanceChange = decimal.MinValue;
             DateTime CreatedAt = DateTime.MinValue;
             DateTime UpdatedAt = DateTime.MinValue;
-            int PersonID = -1;
+            int CurrencyId = -1;
+            int AccountId = -1;
 
             if (clsDebtDataAccess.GetDebtByID(debtId, ref Notes, ref Amount, ref DebtType, ref DebtDate
-                , ref BalanceChange, ref CreatedAt, ref UpdatedAt, ref PersonID))
+                , ref BalanceChange, ref CreatedAt, ref UpdatedAt, ref AccountId))
             {
-                return new clsDebt(debtId, Notes, Amount, DebtType, DebtDate, BalanceChange, CreatedAt, UpdatedAt, PersonID);
+                return new clsDebt(debtId, Notes, Amount, DebtType, DebtDate, BalanceChange, CreatedAt, UpdatedAt,CurrencyId ,AccountId);
             }
             else
             {
@@ -132,7 +87,7 @@ namespace DebtsManagerBusinessLayer
 
         public bool Save()
         {
-            this.BalanceChange = _CalculateBalance();
+            this.BalanceChange = _UpdateAccountBalance();
             switch (this.Mode)
             {
                 case enMode.ADD:
@@ -157,45 +112,31 @@ namespace DebtsManagerBusinessLayer
             return false;
         }
 
+        private decimal _UpdateAccountBalance()
+        {
+            clsAccount CurrencAccount = clsAccount.FindAccount(this.AccountId);
+            if (this.DebtType == enDebtType.INCOME)
+            {
+                CurrencAccount.Deposit(Amount);
+            }
+            else if(this.DebtType == enDebtType.OUTCOME)
+            {
+                CurrencAccount.Withdraw(Amount);
+            }
+            return CurrencAccount.Balance;
+        }
+
         private bool _UpdateDebt()
         {
             this.UpdatedAt = DateTime.Now;
             return clsDebtDataAccess.UpdateDebt(this.Id, this.Notes
-                , this.Amount, this.DebtType, this.DebtDate, this.BalanceChange, this.UpdatedAt);
+                , this.Amount, this.DebtType, this.DebtDate, this.BalanceChange,this.CurrencyId,this.UpdatedAt);
         }
 
         private bool _AddNewDebt()
         {
-            this.Id = clsDebtDataAccess.AddNewDebt(this.Notes, this.Amount, this.DebtType, this.DebtDate, this.BalanceChange, this.PersonID);
+            this.Id = clsDebtDataAccess.AddNewDebt(this.Notes, this.Amount, this.DebtType, this.DebtDate, this.BalanceChange,this.CurrencyId,this.AccountId);
             return this.Id > 0;
-        }
-
-        private decimal _CalculateBalance()
-        {
-            decimal CalculatedBalance = decimal.Zero;
-
-            if (PersonID > 0)
-            {
-                clsPerson Account = clsPerson.FindAccount(PersonID);
-
-                switch (this.DebtType)
-                {
-                    case enDebtType.INCOME:
-                        {
-                            CalculatedBalance = Account.Balance + this.Amount;
-                            Account.Balance = CalculatedBalance;
-                            Account.Save();
-                        }break;
-                    case enDebtType.OUTCOME:
-                        {
-                            CalculatedBalance = Account.Balance - this.Amount;
-                            Account.Balance = CalculatedBalance;
-                            Account.Save();
-                        }
-                        break;
-                }
-            }
-            return CalculatedBalance;
         }
 
         public static bool IsDebtExists(int debtID)
@@ -203,7 +144,7 @@ namespace DebtsManagerBusinessLayer
             return clsDebtDataAccess.IsDebtExists(debtID);
         }
 
-        public static bool DeleteAccount(int debtID)
+        public static bool DeleteDebt(int debtID)
         {
             if (IsDebtExists(debtID))
             {

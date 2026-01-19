@@ -57,8 +57,6 @@
             this.tsmiIncomeAccounts = new System.Windows.Forms.ToolStripMenuItem();
             this.imglstAccount = new System.Windows.Forms.ImageList(this.components);
             this.pnlAccountFunctions = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbSearch = new System.Windows.Forms.TextBox();
             this.lblAccountsCount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblOnYou = new System.Windows.Forms.Label();
@@ -66,6 +64,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddAccount = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbClassifications = new System.Windows.Forms.ComboBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClearSearch = new System.Windows.Forms.Button();
+            this.tbSearch = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.pnlCompanyInfo = new System.Windows.Forms.Panel();
             this.pbCompanyIcon = new System.Windows.Forms.PictureBox();
             this.lblCompanyName = new System.Windows.Forms.Label();
@@ -76,24 +81,18 @@
             this.lblCurrentDate = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnClearSearch = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.cbClassifications = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnReminders = new System.Windows.Forms.Button();
             this.pnlNavigation.SuspendLayout();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlAccounts.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.pnlAccountFunctions.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.pnlCompanyInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCompanyIcon)).BeginInit();
             this.pnlProgramData.SuspendLayout();
             this.pnlCurrentDate.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlNavigation
@@ -365,28 +364,6 @@
             this.pnlAccountFunctions.Size = new System.Drawing.Size(987, 43);
             this.pnlAccountFunctions.TabIndex = 0;
             // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Image = global::DebtsManager.Properties.Resources.icons8_search_24;
-            this.label4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label4.Location = new System.Drawing.Point(311, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 26);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "البحث";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // tbSearch
-            // 
-            this.tbSearch.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSearch.Location = new System.Drawing.Point(106, 5);
-            this.tbSearch.Name = "tbSearch";
-            this.tbSearch.Size = new System.Drawing.Size(199, 34);
-            this.tbSearch.TabIndex = 16;
-            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
-            // 
             // lblAccountsCount
             // 
             this.lblAccountsCount.BackColor = System.Drawing.Color.Gray;
@@ -460,6 +437,86 @@
             this.btnAddAccount.Text = "إضافة حساب";
             this.btnAddAccount.UseVisualStyleBackColor = true;
             this.btnAddAccount.Click += new System.EventHandler(this.btnAddAccount_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.cbClassifications);
+            this.panel2.Controls.Add(this.panel3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(987, 43);
+            this.panel2.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(175, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 26);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "التصنيف";
+            // 
+            // cbClassifications
+            // 
+            this.cbClassifications.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbClassifications.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbClassifications.FormattingEnabled = true;
+            this.cbClassifications.Items.AddRange(new object[] {
+            "عام",
+            "موردين",
+            "عملاء"});
+            this.cbClassifications.Location = new System.Drawing.Point(6, 8);
+            this.cbClassifications.Name = "cbClassifications";
+            this.cbClassifications.Size = new System.Drawing.Size(163, 34);
+            this.cbClassifications.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnClearSearch);
+            this.panel3.Controls.Add(this.tbSearch);
+            this.panel3.Controls.Add(this.label4);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel3.Location = new System.Drawing.Point(592, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(393, 41);
+            this.panel3.TabIndex = 0;
+            // 
+            // btnClearSearch
+            // 
+            this.btnClearSearch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnClearSearch.Location = new System.Drawing.Point(106, 5);
+            this.btnClearSearch.Name = "btnClearSearch";
+            this.btnClearSearch.Size = new System.Drawing.Size(34, 32);
+            this.btnClearSearch.TabIndex = 19;
+            this.btnClearSearch.Text = "X";
+            this.btnClearSearch.UseVisualStyleBackColor = true;
+            this.btnClearSearch.Click += new System.EventHandler(this.btnClearSearch_Click);
+            // 
+            // tbSearch
+            // 
+            this.tbSearch.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSearch.Location = new System.Drawing.Point(106, 5);
+            this.tbSearch.Name = "tbSearch";
+            this.tbSearch.Size = new System.Drawing.Size(199, 34);
+            this.tbSearch.TabIndex = 16;
+            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Image = global::DebtsManager.Properties.Resources.icons8_search_24;
+            this.label4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label4.Location = new System.Drawing.Point(311, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 26);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "البحث";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // pnlCompanyInfo
             // 
@@ -573,75 +630,6 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "اهلا بك يا";
             // 
-            // btnClearSearch
-            // 
-            this.btnClearSearch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnClearSearch.Location = new System.Drawing.Point(106, 5);
-            this.btnClearSearch.Name = "btnClearSearch";
-            this.btnClearSearch.Size = new System.Drawing.Size(34, 32);
-            this.btnClearSearch.TabIndex = 19;
-            this.btnClearSearch.Text = "X";
-            this.btnClearSearch.UseVisualStyleBackColor = true;
-            this.btnClearSearch.Click += new System.EventHandler(this.btnClearSearch_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.btnReminders);
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.cbClassifications);
-            this.panel2.Controls.Add(this.panel3);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(987, 43);
-            this.panel2.TabIndex = 2;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.btnClearSearch);
-            this.panel3.Controls.Add(this.tbSearch);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(592, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(393, 41);
-            this.panel3.TabIndex = 0;
-            // 
-            // cbClassifications
-            // 
-            this.cbClassifications.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbClassifications.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbClassifications.FormattingEnabled = true;
-            this.cbClassifications.Items.AddRange(new object[] {
-            "عام",
-            "موردين",
-            "عملاء"});
-            this.cbClassifications.Location = new System.Drawing.Point(6, 8);
-            this.cbClassifications.Name = "cbClassifications";
-            this.cbClassifications.Size = new System.Drawing.Size(163, 34);
-            this.cbClassifications.TabIndex = 1;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(175, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 26);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "التصنيف";
-            // 
-            // btnReminders
-            // 
-            this.btnReminders.Font = new System.Drawing.Font("El Messiri", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReminders.Location = new System.Drawing.Point(263, 7);
-            this.btnReminders.Name = "btnReminders";
-            this.btnReminders.Size = new System.Drawing.Size(87, 30);
-            this.btnReminders.TabIndex = 12;
-            this.btnReminders.Text = "التنبيهات";
-            this.btnReminders.UseVisualStyleBackColor = true;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -665,6 +653,10 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.pnlAccountFunctions.ResumeLayout(false);
             this.pnlAccountFunctions.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.pnlCompanyInfo.ResumeLayout(false);
             this.pnlCompanyInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCompanyIcon)).EndInit();
@@ -672,10 +664,6 @@
             this.pnlProgramData.PerformLayout();
             this.pnlCurrentDate.ResumeLayout(false);
             this.pnlCurrentDate.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -733,7 +721,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbClassifications;
-        private System.Windows.Forms.Button btnReminders;
     }
 }
 

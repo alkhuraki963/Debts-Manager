@@ -10,21 +10,22 @@ namespace DebtsManagerDataAccessLayer
 {
     public class clsPersonDataAccess
     {
-        public static int AddNewPerson(string fullName, string phone, string email)
+        public static int AddNewPerson(string fullName, string phone, string email, int classificationId)
         {
-            //this function will return the new contact id if succeeded and -1 if not.
-            int ContactID = -1;
+            //this function will return the new Person id if succeeded and -1 if not.
+            int PersonId = -1;
 
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string query = @"INSERT INTO persons (FullName, Phone, Email)
-                             VALUES (@FullName, @Phone, @Email);
+            string query = @"INSERT INTO persons (FullName, Phone, Email,ClassificationId)
+                             VALUES (@FullName, @Phone, @Email,@classificationId);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@FullName", fullName);
             command.Parameters.AddWithValue("@Phone", phone);
+            command.Parameters.AddWithValue("@ClassificationId", classificationId);
 
             // Handle Null Values
             if (string.IsNullOrEmpty(email))
@@ -45,7 +46,7 @@ namespace DebtsManagerDataAccessLayer
 
                 if (result != null && int.TryParse(result.ToString(), out int insertedID))
                 {
-                    ContactID = insertedID;
+                    PersonId = insertedID;
                 }
             }
 
@@ -59,7 +60,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Close();
             }
 
-            return ContactID;
+            return PersonId;
         }
 
         public static bool DeletePerson(int accountID)
@@ -126,7 +127,8 @@ namespace DebtsManagerDataAccessLayer
             return dt;
         }
 
-        public static bool GetPersonByID(int personID, ref string fullName, ref string phone, ref string email, ref decimal balance, ref bool isArchived, ref DateTime createdAt, ref DateTime updatedAt)
+        public static bool GetPersonByID(int personID, ref string fullName, ref string phone, ref string email,
+            ref int classificationId, ref DateTime createdAt, ref DateTime updatedAt)
         {
             bool isFound = false;
 
@@ -149,14 +151,12 @@ namespace DebtsManagerDataAccessLayer
                     isFound = true;
 
                     fullName = (string)reader["FullName"];
-                    balance = (decimal)reader["Balance"];
-                    isArchived = (bool)reader["IsArchived"];
-
-                    // Values that allow null
-                    phone = reader["Phone"] != DBNull.Value ? (string)reader["Phone"] : string.Empty;
+                    phone = (string)reader["Phone"];
+                    // email value allows null
                     email = reader["Email"] != DBNull.Value ? (string)reader["Email"] : string.Empty;
-                    createdAt = reader["CreatedAt"] != DBNull.Value ? (DateTime)reader["CreatedAt"] : DateTime.MinValue;
-                    updatedAt = reader["UpdatedAt"] != DBNull.Value ? (DateTime)reader["UpdatedAt"] : DateTime.MinValue;
+                    classificationId = (int)reader["ClassificationId"];
+                    createdAt = (DateTime)reader["CreatedAt"];
+                    updatedAt = (DateTime)reader["UpdatedAt"];
                 }
                 else
                 {
@@ -214,7 +214,7 @@ namespace DebtsManagerDataAccessLayer
             return isFound;
         }
 
-        public static DataTable Search(string text)
+        public static DataTable SearchForPerson(string text)
         {
 
             DataTable dt = new DataTable();
@@ -222,7 +222,7 @@ namespace DebtsManagerDataAccessLayer
 
             string Query = "select * from Persons where fullname like @Text";
             SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@Text","%" +  text + "%");
+            sqlCommand.Parameters.AddWithValue("@Text", "%" + text + "%");
             try
             {
                 sqlConnection.Open();
@@ -245,7 +245,8 @@ namespace DebtsManagerDataAccessLayer
             return dt;
         }
 
-        public static bool UpdatePerson(int id, string fullName, string phone, string email, decimal balance, bool isArchived, DateTime updatedAt)
+        public static bool UpdatePerson(int id, string fullName, string phone, string email,
+            int classificationId, DateTime updatedAt)
         {
             int rowsAffected = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
@@ -254,8 +255,7 @@ namespace DebtsManagerDataAccessLayer
                             set FullName = @FullName, 
                                 Phone = @Phone, 
                                 Email = @Email, 
-                                Balance = @Balance, 
-                                IsArchived = @IsArchived,
+                                ClassificationId = @ClassificationId,
                                 UpdatedAt = @UpdatedAt
                                 where PersonId = @PersonId";
 
@@ -264,8 +264,7 @@ namespace DebtsManagerDataAccessLayer
             command.Parameters.AddWithValue("@PersonId", id);
             command.Parameters.AddWithValue("@FullName", fullName);
             command.Parameters.AddWithValue("@Phone", phone);
-            command.Parameters.AddWithValue("@Balance", balance);
-            command.Parameters.AddWithValue("@IsArchived", isArchived);
+            command.Parameters.AddWithValue("@ClassificationId", classificationId);
             command.Parameters.AddWithValue("@UpdatedAt", updatedAt);
 
             // Handle Null Values

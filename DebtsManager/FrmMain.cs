@@ -28,9 +28,8 @@ namespace DebtsManager
         private void btnAccountPage_Click(object sender, EventArgs e)
         {
             pnlProgramData.Visible = false;
-            //pnlNavigation.Dock = DockStyle.Top;
             pnlAccounts.Visible = true;
-            _LoadAccounts();
+            _LoadPersons();
         }
 
         private void _ConfigureLvAccountsUI()
@@ -60,58 +59,54 @@ namespace DebtsManager
             lvAccounts.BeginUpdate();
         }
 
-        private void _LoadAccounts()
+        private void _LoadPersons()
         {
 
             _ConfigureLvAccountsUI();
-            DataTable dtAccounts = clsPerson.GetAllAccounts();
+            DataTable dtAccounts = clsPerson.GetAllPersons();
 
             try
             {
                 foreach (DataRow row in dtAccounts.Rows)
                 {
                     string fullName = row["fullname"].ToString();
-                    decimal balance = 0;
+                    decimal balance = clsPerson.CalculateTotalBalance(Convert.ToInt32(row["PersonId"]));
+                    // Create item
+                    ListViewItem item = new ListViewItem(fullName);
 
-                    // Safely parse balance
-                    if (decimal.TryParse(row["balance"].ToString(), out balance))
+                    // Format balance nicely
+                    string formattedBalance = balance.ToString(clsSettings.NumberFormat) + clsCurrency.GetDefaultCurrency().Suffix;
+                    item.SubItems.Add(formattedBalance);
+
+                    // Store ID in Tag
+                    item.Tag = row["PersonId"];
+                    item.ImageIndex = 0;
+
+                    // Better color scheme based on balance
+                    if (balance > 0)
                     {
-                        // Create item
-                        ListViewItem item = new ListViewItem(fullName);
-
-                        // Format balance nicely
-                        string formattedBalance = balance.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
-                        item.SubItems.Add(formattedBalance);
-
-                        // Store ID in Tag
-                        item.Tag = row["PersonId"];
-                        item.ImageIndex = 0;
-
-                        // Better color scheme based on balance
-                        if (balance > 0)
-                        {
-                            item.BackColor = Color.FromArgb(230, 255, 230); // Very light green
-                            item.ForeColor = Color.DarkGreen;
-                            item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
-                        }
-                        else if (balance < 0)
-                        {
-                            item.BackColor = Color.FromArgb(255, 230, 230); // Very light red
-                            item.ForeColor = Color.DarkRed;
-                            item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
-                        }
-                        else // Zero balance
-                        {
-                            item.BackColor = Color.FromArgb(240, 240, 240); // Light gray
-                            item.ForeColor = Color.Gray;
-                            item.Font = new Font(lvAccounts.Font, FontStyle.Italic);
-                        }
-
-                        // Add tooltip for more info
-                        item.ToolTipText = $"Name: {fullName}\nBalance: {formattedBalance}\nID: {row["PersonId"]}";
-
-                        lvAccounts.Items.Add(item);
+                        item.BackColor = Color.FromArgb(230, 255, 230); // Very light green
+                        item.ForeColor = Color.DarkGreen;
+                        item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
                     }
+                    else if (balance < 0)
+                    {
+                        item.BackColor = Color.FromArgb(255, 230, 230); // Very light red
+                        item.ForeColor = Color.DarkRed;
+                        item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
+                    }
+                    else // Zero balance
+                    {
+                        item.BackColor = Color.FromArgb(240, 240, 240); // Light gray
+                        item.ForeColor = Color.Gray;
+                        item.Font = new Font(lvAccounts.Font, FontStyle.Italic);
+                    }
+
+                    // Add tooltip for more info
+                    item.ToolTipText = $"Name: {fullName}\nBalance: {formattedBalance}\nID: {row["PersonId"]}";
+
+                    lvAccounts.Items.Add(item);
+
                 }
             }
             finally
@@ -193,16 +188,16 @@ namespace DebtsManager
 
                     FrmAccount Frm = new FrmAccount(personId);
                     Frm.ShowDialog();
-                    _LoadAccounts();
+                    _LoadPersons();
                 }
             }
         }
 
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
-            FrmAddAccount frm = new FrmAddAccount();
+            FrmAddPerson frm = new FrmAddPerson();
             frm.ShowDialog();
-            _LoadAccounts();
+            _LoadPersons();
         }
 
         private void lvAccounts_SelectedIndexChanged(object sender, EventArgs e)
@@ -264,7 +259,7 @@ namespace DebtsManager
                     notifyIcon.Icon = SystemIcons.Application;
                     notifyIcon.Visible = true;
                     notifyIcon.ShowBalloonTip(3000, "تم الحذف", $"تم حذف حساب {PersonName} بنجاح", ToolTipIcon.Info);
-                    _LoadAccounts();
+                    _LoadPersons();
                 }
 
             }
@@ -278,7 +273,7 @@ namespace DebtsManager
             }
             int PersonId = Convert.ToInt32(lvAccounts.SelectedItems[0].Tag);
             clsPerson Person = clsPerson.FindAccount(PersonId);
-            FrmAddAccount frmAddAccount = new FrmAddAccount(Person);
+            FrmAddPerson frmAddAccount = new FrmAddPerson(Person);
 
             if (frmAddAccount.ShowDialog() == DialogResult.OK)
             {
@@ -287,7 +282,7 @@ namespace DebtsManager
                 notifyIcon.Icon = SystemIcons.Application;
                 notifyIcon.Visible = true;
                 notifyIcon.ShowBalloonTip(3000, "تم التعديل", $"تم تعديل حساب بنجاح", ToolTipIcon.Info);
-                _LoadAccounts();
+                _LoadPersons();
             }
         }
 
@@ -392,7 +387,7 @@ namespace DebtsManager
         private void btnClearSearch_Click(object sender, EventArgs e)
         {
             tbSearch.Clear();
-            _LoadAccounts();
+            _LoadPersons();
         }
     }
 }

@@ -55,11 +55,11 @@
     <Compile Include="FrmAccount.Designer.cs">
       <DependentUpon>FrmAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmAddAccount.cs">
+    <Compile Include="FrmAddPerson.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAddAccount.Designer.cs">
-      <DependentUpon>FrmAddAccount.cs</DependentUpon>
+    <Compile Include="FrmAddPerson.Designer.cs">
+      <DependentUpon>FrmAddPerson.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmAddDebt.cs">
       <SubType>Form</SubType>
@@ -78,8 +78,8 @@
     <EmbeddedResource Include="FrmAccount.resx">
       <DependentUpon>FrmAccount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmAddAccount.resx">
-      <DependentUpon>FrmAddAccount.cs</DependentUpon>
+    <EmbeddedResource Include="FrmAddPerson.resx">
+      <DependentUpon>FrmAddPerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAddDebt.resx">
       <DependentUpon>FrmAddDebt.cs</DependentUpon>

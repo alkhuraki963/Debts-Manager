@@ -1,7 +1,9 @@
 ﻿using DebtsManagerDataAccessLayer;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,15 +17,12 @@ namespace DebtsManagerBusinessLayer
 
     public class clsPerson
     {
-
-
         public enMode Mode;
         public int Id { get; private set; }
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public decimal Balance { get; set; }
-        public bool IsArchived { get; private set; }
+        public int ClassificationId { get; set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
@@ -33,27 +32,25 @@ namespace DebtsManagerBusinessLayer
             this.FullName = string.Empty;
             this.Phone = string.Empty;
             this.Email = string.Empty;
-            this.Balance = decimal.Zero;
-            this.IsArchived = false;
+            this.ClassificationId = -1;
             this.UpdatedAt = DateTime.Now;
             this.CreatedAt = DateTime.Now;
             this.Mode = enMode.ADD;
         }
 
-        private clsPerson(int Id, string FullName, string Phone, string Email, decimal Balance, bool IsArchived, DateTime CreatedAt, DateTime UpdatedAt)
+        private clsPerson(int Id, string FullName, string Phone, string Email, int ClassificationId, DateTime CreatedAt, DateTime UpdatedAt)
         {
             this.Id = Id;
             this.FullName = FullName;
             this.Phone = Phone;
             this.Email = Email;
-            this.Balance = Balance;
-            this.IsArchived = IsArchived;
+            this.ClassificationId = ClassificationId;
             this.CreatedAt = CreatedAt;
             this.UpdatedAt = UpdatedAt;
             this.Mode = enMode.UPDATE;
         }
 
-        public static DataTable GetAllAccounts()
+        public static DataTable GetAllPersons()
         {
             return clsPersonDataAccess.GetAllPersons();
         }
@@ -63,15 +60,13 @@ namespace DebtsManagerBusinessLayer
             string FullName = string.Empty;
             string Phone = string.Empty;
             string Email = string.Empty;
-            decimal Balance = decimal.MinValue;
-            bool IsArchived = false;
+            int ClassificationId = -1;
             DateTime CreatedAt = DateTime.MinValue;
             DateTime UpdatedAt = DateTime.MinValue;
 
-            if (clsPersonDataAccess.GetPersonByID(AccountID, ref FullName, ref Phone, ref Email, ref Balance
-                , ref IsArchived, ref CreatedAt, ref UpdatedAt))
+            if (clsPersonDataAccess.GetPersonByID(AccountID, ref FullName, ref Phone, ref Email, ref ClassificationId, ref CreatedAt, ref UpdatedAt))
             {
-                return new clsPerson(AccountID, FullName, Phone, Email, Balance, IsArchived, CreatedAt, UpdatedAt);
+                return new clsPerson(AccountID, FullName, Phone, Email,ClassificationId, CreatedAt, UpdatedAt);
             }
             else
             {
@@ -106,23 +101,16 @@ namespace DebtsManagerBusinessLayer
             return false;
         }
 
-        public bool ArchiveAccount()
-        {
-            IsArchived = true;
-            return clsPersonDataAccess.UpdatePerson(this.Id, this.FullName
-                , this.Phone, this.Email, this.Balance, this.IsArchived, this.UpdatedAt);
-        }
-
         private bool _UpdateAccount()
         {
             this.UpdatedAt = DateTime.Now;
             return clsPersonDataAccess.UpdatePerson(this.Id, this.FullName
-                , this.Phone, this.Email, this.Balance, this.IsArchived, this.UpdatedAt);
+                , this.Phone, this.Email,this.ClassificationId,this.UpdatedAt);
         }
 
         private bool _AddNewAccount()
         {
-            this.Id = clsPersonDataAccess.AddNewPerson(this.FullName, this.Phone, this.Email);
+            this.Id = clsPersonDataAccess.AddNewPerson(this.FullName, this.Phone, this.Email, this.ClassificationId);
             return this.Id > 0;
         }
 
@@ -145,7 +133,13 @@ namespace DebtsManagerBusinessLayer
 
         public static DataTable Search(string text)
         {
-            return clsPersonDataAccess.Search(text);
+            return clsPersonDataAccess.SearchForPerson(text);
+        }
+
+        public static decimal CalculateTotalBalance(int PersonId)
+        {
+            List<clsAccount> PersonAccounts = clsAccount.GetAllAccounts(PersonId);
+            return 0;
         }
     }
 }

@@ -14,15 +14,16 @@ namespace DebtsManagerDataAccessLayer
 
     public class clsDebtDataAccess
     {
-        public static int AddNewDebt(string notes, decimal amount, enDebtType debtType, DateTime debtDate,decimal balanceChange,int personId)
+        public static int AddNewDebt(string notes, decimal amount, enDebtType debtType, DateTime debtDate,
+            decimal balanceChange,int currencyId,int AccountId)
         {
             //this function will return the new Debt debtID if succeeded and -1 if not.
             int DebtID = -1;
 
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string query = @"INSERT INTO Debts (Notes, Amount, DebtType,DebtDate,BalanceChange,PersonId)
-                             VALUES (@Notes, @Amount, @DebtType,@DebtDate,@BalanceChange,@PersonId);
+            string query = @"INSERT INTO Debts (Notes, Amount, DebtType,DebtDate,BalanceChange,AccountId)
+                             VALUES (@Notes, @Amount, @DebtType,@DebtDate,@BalanceChange,@AccountId);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -31,7 +32,7 @@ namespace DebtsManagerDataAccessLayer
             command.Parameters.AddWithValue("@Amount", amount);
             command.Parameters.AddWithValue("@DebtDate", debtDate);
             command.Parameters.AddWithValue("@BalanceChange", balanceChange);
-            command.Parameters.AddWithValue("@PersonId", personId);
+            command.Parameters.AddWithValue("@AccountId", AccountId);
 
             if(debtType == enDebtType.INCOME)
             {
@@ -102,14 +103,14 @@ namespace DebtsManagerDataAccessLayer
             return (rowsAffected > 0);
         }
 
-        public static DataTable GetAllDebts(int personId)
+        public static DataTable GetAllDebts(int AccountId)
         {
             DataTable dt = new DataTable();
             SqlConnection sqlConnection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string Query = "select * from Debts where PersonId = @PersonId";
+            string Query = "select * from Debts where AccountId = @AccountId";
             SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@PersonId", personId);
+            sqlCommand.Parameters.AddWithValue("@AccountId", AccountId);
 
             try
             {
@@ -133,7 +134,8 @@ namespace DebtsManagerDataAccessLayer
             return dt;
         }
 
-        public static bool GetDebtByID(int debtId, ref string notes, ref decimal amount, ref enDebtType debtType, ref DateTime debtDate, ref decimal balanceChange, ref DateTime createdAt, ref DateTime updatedAt, ref int personID)
+        public static bool GetDebtByID(int debtId, ref string notes, ref decimal amount, ref enDebtType debtType, ref DateTime debtDate,
+            ref decimal balanceChange, ref DateTime createdAt, ref DateTime updatedAt, ref int AccountId)
         {
             bool isFound = false;
 
@@ -162,7 +164,7 @@ namespace DebtsManagerDataAccessLayer
                     balanceChange = (decimal)reader["BalanceChange"];
                     createdAt =  (DateTime)reader["CreatedAt"];
                     updatedAt = (DateTime)reader["UpdatedAt"];
-                    personID = (int)reader["PersonID"];
+                    AccountId = (int)reader["AccountId"];
                 }
                 else
                 {
@@ -220,7 +222,8 @@ namespace DebtsManagerDataAccessLayer
             return isFound;
         }
 
-        public static bool UpdateDebt(int debtID, string notes, decimal amount, enDebtType debtType, DateTime debtDate, decimal balanceChange, DateTime updatedAt)
+        public static bool UpdateDebt(int debtID, string notes, decimal amount, enDebtType debtType, DateTime debtDate,
+            decimal balanceChange,int currencyId,DateTime updatedAt)
         {
             int rowsAffected = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
@@ -231,6 +234,7 @@ namespace DebtsManagerDataAccessLayer
                                 DebtType = @DebtType, 
                                 DebtDate = @DebtDate, 
                                 BalanceChange = @BalanceChange,
+                                CurrencyId = @CurrencyId,
                                 UpdatedAt = @UpdatedAt,
                                 where DebtId = @DebtId";
 
@@ -242,6 +246,7 @@ namespace DebtsManagerDataAccessLayer
             command.Parameters.AddWithValue("@DebtType", debtType);
             command.Parameters.AddWithValue("@DebtDate", debtDate);
             command.Parameters.AddWithValue("@BalanceChange", balanceChange);
+            command.Parameters.AddWithValue("@CurrencyId", currencyId);
             command.Parameters.AddWithValue("@UpdatedAt", updatedAt);
 
             try

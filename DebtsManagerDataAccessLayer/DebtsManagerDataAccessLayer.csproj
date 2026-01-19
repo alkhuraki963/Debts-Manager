@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsAccountDataAccess.cs" />
+    <Compile Include="clsClassificationDataAccess.cs" />
+    <Compile Include="clsCurrencyDataAccess.cs" />
     <Compile Include="clsDataAccessLayerSettings.cs" />
     <Compile Include="clsDebtDataAccess.cs" />
     <Compile Include="clsPersonDataAccess.cs" />

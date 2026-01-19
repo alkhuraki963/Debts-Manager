@@ -40,3 +40,4 @@ C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Deb
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsMan.675F113D.Up2Date
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.exe
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddPerson.resources
