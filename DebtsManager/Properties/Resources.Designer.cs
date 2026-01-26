@@ -163,6 +163,26 @@ namespace DebtsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_cash_241 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-cash-241", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_currency_32 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-currency-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_expense_24 {
             get {
                 object obj = ResourceManager.GetObject("icons8-expense-24", resourceCulture);
@@ -186,6 +206,16 @@ namespace DebtsManager.Properties {
         internal static System.Drawing.Bitmap icons8_income_24 {
             get {
                 object obj = ResourceManager.GetObject("icons8-income-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_info_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-info-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,6 +266,16 @@ namespace DebtsManager.Properties {
         internal static System.Drawing.Bitmap pricesMenu {
             get {
                 object obj = ResourceManager.GetObject("pricesMenu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap user {
+            get {
+                object obj = ResourceManager.GetObject("user", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

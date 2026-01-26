@@ -177,7 +177,7 @@ namespace DebtsManagerBusinessLayer
 
         public static List<clsAccount> GetAllAccounts(int personId)
         {
-            DataRow[] PersonAccountRows = GetAllAccounts().Select("PersonId = " + personId);
+            DataRow[] PersonAccountRows = GetAllAccounts().Select($"PersonId = {personId}");
             List<clsAccount> PersonAccounts = new List<clsAccount>();
             clsAccount Account;
             foreach (DataRow AccountRow in PersonAccountRows)

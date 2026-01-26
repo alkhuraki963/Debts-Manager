@@ -120,7 +120,7 @@ namespace DebtsManagerDataAccessLayer
                 }
             }
 
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
             }
@@ -157,7 +157,7 @@ namespace DebtsManagerDataAccessLayer
                 rowsAffected = command.ExecuteNonQuery();
 
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;
@@ -283,8 +283,8 @@ namespace DebtsManagerDataAccessLayer
             int rowsAffected = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string query = @"UPDATE Accounts SET IsDefault = False;
-                             UPDATE Accounts SET IsDefault = True WHERE AccountId = @AccountId";
+            string query = @"UPDATE Accounts SET IsDefault = 0;
+                             UPDATE Accounts SET IsDefault = 1 WHERE AccountId = @AccountId";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@AccountId", accountId);
@@ -293,7 +293,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;

@@ -4,3 +4,9 @@ C:\studing\My Projects\Windows Forms Projects\DebtsManagerUtility\obj\Debug\Debt
 C:\studing\My Projects\Windows Forms Projects\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.csproj.CoreCompileInputs.cache
 C:\studing\My Projects\Windows Forms Projects\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.dll
 C:\studing\My Projects\Windows Forms Projects\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerUtility\bin\Debug\DebtsManagerUtility.dll
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerUtility\bin\Debug\DebtsManagerUtility.pdb
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.csproj.AssemblyReference.cache
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.csproj.CoreCompileInputs.cache
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.dll
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManagerUtility\obj\Debug\DebtsManagerUtility.pdb

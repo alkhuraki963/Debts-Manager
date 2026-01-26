@@ -34,7 +34,7 @@ namespace DebtsManagerDataAccessLayer
                 }
             }
 
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
             }
@@ -66,7 +66,7 @@ namespace DebtsManagerDataAccessLayer
 
             }
 
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
             }

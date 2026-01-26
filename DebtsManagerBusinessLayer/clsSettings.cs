@@ -9,8 +9,7 @@ namespace DebtsManagerBusinessLayer
 {
     public class clsSettings
     {
-        public static string CurrencySuffix = "ل.س";
-        public static string NumberFormat = "N0";
+        public static string NumberFormat = "N2";
 
         public static string GetLvAccountsViewType()
         {
@@ -20,5 +19,14 @@ namespace DebtsManagerBusinessLayer
         {
             return clsSettingsDataAccess.UpdateLvAccountViewType(lvAccountViewType);
         }
+        public static string GetIncomeText()
+        {
+            return "له";
+        }
+        public static string GetOutcomeText()
+        {
+            return "عليه";
+        }
+
     }
 }

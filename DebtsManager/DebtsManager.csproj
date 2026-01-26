@@ -55,6 +55,12 @@
     <Compile Include="FrmAccount.Designer.cs">
       <DependentUpon>FrmAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmAddNewCurrency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddNewCurrency.Designer.cs">
+      <DependentUpon>FrmAddNewCurrency.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmAddPerson.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,16 +73,43 @@
     <Compile Include="FrmAddDebt.Designer.cs">
       <DependentUpon>FrmAddDebt.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmChooseFilterDates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmChooseFilterDates.Designer.cs">
+      <DependentUpon>FrmChooseFilterDates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCurrencyRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCurrencyRate.Designer.cs">
+      <DependentUpon>FrmCurrencyRate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDefaultCurrency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDefaultCurrency.Designer.cs">
+      <DependentUpon>FrmDefaultCurrency.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSettings.Designer.cs">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAccount.resx">
       <DependentUpon>FrmAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddNewCurrency.resx">
+      <DependentUpon>FrmAddNewCurrency.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAddPerson.resx">
       <DependentUpon>FrmAddPerson.cs</DependentUpon>
@@ -84,8 +117,20 @@
     <EmbeddedResource Include="FrmAddDebt.resx">
       <DependentUpon>FrmAddDebt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmChooseFilterDates.resx">
+      <DependentUpon>FrmChooseFilterDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCurrencyRate.resx">
+      <DependentUpon>FrmCurrencyRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDefaultCurrency.resx">
+      <DependentUpon>FrmDefaultCurrency.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSettings.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -133,6 +178,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="debts_manager.ico" />
+    <None Include="Resources\icons8-currency-32.png" />
+    <None Include="Resources\user.png" />
+    <None Include="Resources\icons8-info-16.png" />
+    <None Include="Resources\icons8-cash-241.png" />
     <None Include="Resources\icons8-search-241.png" />
     <None Include="Resources\icons8-about-24.png" />
     <None Include="Resources\icons8-reports-24.png" />

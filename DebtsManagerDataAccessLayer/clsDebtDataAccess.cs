@@ -15,7 +15,7 @@ namespace DebtsManagerDataAccessLayer
     public class clsDebtDataAccess
     {
         public static int AddNewDebt(string notes, decimal amount, enDebtType debtType, DateTime debtDate,
-            decimal balanceChange,int currencyId,int AccountId)
+            decimal balanceChange, int currencyId, int AccountId)
         {
             //this function will return the new Debt debtID if succeeded and -1 if not.
             int DebtID = -1;
@@ -34,7 +34,7 @@ namespace DebtsManagerDataAccessLayer
             command.Parameters.AddWithValue("@BalanceChange", balanceChange);
             command.Parameters.AddWithValue("@AccountId", AccountId);
 
-            if(debtType == enDebtType.INCOME)
+            if (debtType == enDebtType.INCOME)
             {
                 command.Parameters.AddWithValue("@DebtType", "INCOME");
             }
@@ -56,7 +56,7 @@ namespace DebtsManagerDataAccessLayer
                 }
             }
 
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
             }
@@ -89,7 +89,7 @@ namespace DebtsManagerDataAccessLayer
                 rowsAffected = command.ExecuteNonQuery();
 
             }
-            catch (Exception ex)
+            catch
             {
                 // Console.WriteLine("Error: " + ex.Message);
             }
@@ -159,10 +159,10 @@ namespace DebtsManagerDataAccessLayer
 
                     notes = (string)reader["Notes"];
                     amount = (decimal)reader["Amount"];
-                    debtType = (enDebtType)reader["DebtType"];
+                    debtType = _GetDebtType(reader["DebtType"].ToString());
                     debtDate = (DateTime)reader["DebtDate"];
                     balanceChange = (decimal)reader["BalanceChange"];
-                    createdAt =  (DateTime)reader["CreatedAt"];
+                    createdAt = (DateTime)reader["CreatedAt"];
                     updatedAt = (DateTime)reader["UpdatedAt"];
                     AccountId = (int)reader["AccountId"];
                 }
@@ -176,7 +176,7 @@ namespace DebtsManagerDataAccessLayer
 
 
             }
-            catch (Exception ex)
+            catch
             {
                 isFound = false;
             }
@@ -186,6 +186,14 @@ namespace DebtsManagerDataAccessLayer
             }
 
             return isFound;
+        }
+
+        private static enDebtType _GetDebtType(string type)
+        {
+            if (type.ToUpper().Equals("INCOME"))
+                return enDebtType.INCOME;
+            else
+                return enDebtType.OUTCOME;
         }
 
         public static bool IsDebtExists(int debtID)
@@ -209,7 +217,7 @@ namespace DebtsManagerDataAccessLayer
 
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 isFound = false;
@@ -223,7 +231,7 @@ namespace DebtsManagerDataAccessLayer
         }
 
         public static bool UpdateDebt(int debtID, string notes, decimal amount, enDebtType debtType, DateTime debtDate,
-            decimal balanceChange,int currencyId,DateTime updatedAt)
+            decimal balanceChange, int currencyId, DateTime updatedAt)
         {
             int rowsAffected = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
@@ -234,8 +242,7 @@ namespace DebtsManagerDataAccessLayer
                                 DebtType = @DebtType, 
                                 DebtDate = @DebtDate, 
                                 BalanceChange = @BalanceChange,
-                                CurrencyId = @CurrencyId,
-                                UpdatedAt = @UpdatedAt,
+                                UpdatedAt = @UpdatedAt
                                 where DebtId = @DebtId";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -243,7 +250,7 @@ namespace DebtsManagerDataAccessLayer
             command.Parameters.AddWithValue("@DebtId", debtID);
             command.Parameters.AddWithValue("@Notes", notes);
             command.Parameters.AddWithValue("@Amount", amount);
-            command.Parameters.AddWithValue("@DebtType", debtType);
+            command.Parameters.AddWithValue("@DebtType", _GetDebtTypeString(debtType));
             command.Parameters.AddWithValue("@DebtDate", debtDate);
             command.Parameters.AddWithValue("@BalanceChange", balanceChange);
             command.Parameters.AddWithValue("@CurrencyId", currencyId);
@@ -255,7 +262,7 @@ namespace DebtsManagerDataAccessLayer
                 rowsAffected = command.ExecuteNonQuery();
 
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;
@@ -267,6 +274,52 @@ namespace DebtsManagerDataAccessLayer
             }
 
             return (rowsAffected > 0);
+        }
+
+        private static string _GetDebtTypeString(enDebtType debtType)
+        {
+            if (debtType == enDebtType.INCOME)
+            {
+                return "INCOME";
+            }
+            else
+            {
+                return "OUTCOME";
+            }
+        }
+
+        public static DataTable SearchForDebt(string text, int accountId)
+        {
+            DataTable dt = new DataTable();
+
+            SqlConnection sqlConnection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
+
+            string Query = "select * from Debts where AccountId = @AccountId and Notes like @Text";
+
+            SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@AccountId", accountId);
+            sqlCommand.Parameters.AddWithValue("@Text", "%" + text + "%");
+
+            try
+            {
+                sqlConnection.Open();
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return dt;
         }
     }
 }

@@ -30,7 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvDebts = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFilterDate = new System.Windows.Forms.ToolStripMenuItem();
+            this.خياراتToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlFunctions = new System.Windows.Forms.Panel();
+            this.lblAllAccountsBalance = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.lblBalance = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblTransactionsCount = new System.Windows.Forms.Label();
@@ -47,9 +54,15 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnClearSearch = new System.Windows.Forms.Button();
             this.tbSearch = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFilterIncomeDebts = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFilterOutcomeDebts = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowInOtherCurrencies = new System.Windows.Forms.ToolStripMenuItem();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDebts)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.pnlFunctions.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -63,6 +76,7 @@
             this.dgvDebts.AllowUserToResizeColumns = false;
             this.dgvDebts.AllowUserToResizeRows = false;
             this.dgvDebts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDebts.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvDebts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDebts.Location = new System.Drawing.Point(0, 46);
             this.dgvDebts.Name = "dgvDebts";
@@ -75,8 +89,56 @@
             this.dgvDebts.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDebts_DataError);
             this.dgvDebts.Sorted += new System.EventHandler(this.dgvDebts_Sorted);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Font = new System.Drawing.Font("El Messiri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiEdit,
+            this.tsmiDelete,
+            this.toolStripMenuItem1,
+            this.tsmiFilter,
+            this.خياراتToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 150);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(211, 6);
+            // 
+            // tsmiFilter
+            // 
+            this.tsmiFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiFilterIncomeDebts,
+            this.tsmiFilterOutcomeDebts,
+            this.tsmiFilterDate});
+            this.tsmiFilter.Name = "tsmiFilter";
+            this.tsmiFilter.Size = new System.Drawing.Size(214, 28);
+            this.tsmiFilter.Text = "تصفية";
+            // 
+            // tsmiFilterDate
+            // 
+            this.tsmiFilterDate.Name = "tsmiFilterDate";
+            this.tsmiFilterDate.Size = new System.Drawing.Size(224, 28);
+            this.tsmiFilterDate.Text = "حسب التاريخ";
+            this.tsmiFilterDate.Click += new System.EventHandler(this.tsmiFilterDate_Click);
+            // 
+            // خياراتToolStripMenuItem
+            // 
+            this.خياراتToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowInOtherCurrencies});
+            this.خياراتToolStripMenuItem.Name = "خياراتToolStripMenuItem";
+            this.خياراتToolStripMenuItem.Size = new System.Drawing.Size(214, 28);
+            this.خياراتToolStripMenuItem.Text = "خيارات";
+            // 
             // pnlFunctions
             // 
+            this.pnlFunctions.BackColor = System.Drawing.Color.Azure;
+            this.pnlFunctions.Controls.Add(this.lblAllAccountsBalance);
+            this.pnlFunctions.Controls.Add(this.label8);
             this.pnlFunctions.Controls.Add(this.lblBalance);
             this.pnlFunctions.Controls.Add(this.label5);
             this.pnlFunctions.Controls.Add(this.lblTransactionsCount);
@@ -88,19 +150,40 @@
             this.pnlFunctions.Controls.Add(this.btnAddDebts);
             this.pnlFunctions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlFunctions.Font = new System.Drawing.Font("El Messiri", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlFunctions.Location = new System.Drawing.Point(0, 520);
+            this.pnlFunctions.Location = new System.Drawing.Point(0, 484);
             this.pnlFunctions.Name = "pnlFunctions";
-            this.pnlFunctions.Size = new System.Drawing.Size(1291, 39);
+            this.pnlFunctions.Size = new System.Drawing.Size(1291, 75);
             this.pnlFunctions.TabIndex = 1;
+            // 
+            // lblAllAccountsBalance
+            // 
+            this.lblAllAccountsBalance.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblAllAccountsBalance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAllAccountsBalance.ForeColor = System.Drawing.Color.White;
+            this.lblAllAccountsBalance.Location = new System.Drawing.Point(17, 41);
+            this.lblAllAccountsBalance.Name = "lblAllAccountsBalance";
+            this.lblAllAccountsBalance.Size = new System.Drawing.Size(346, 29);
+            this.lblAllAccountsBalance.TabIndex = 10;
+            this.lblAllAccountsBalance.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(369, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(100, 26);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "الرصيد الكلي";
             // 
             // lblBalance
             // 
             this.lblBalance.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblBalance.Font = new System.Drawing.Font("El Messiri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBalance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBalance.ForeColor = System.Drawing.Color.White;
-            this.lblBalance.Location = new System.Drawing.Point(193, 8);
+            this.lblBalance.Location = new System.Drawing.Point(17, 8);
             this.lblBalance.Name = "lblBalance";
-            this.lblBalance.Size = new System.Drawing.Size(253, 23);
+            this.lblBalance.Size = new System.Drawing.Size(346, 30);
             this.lblBalance.TabIndex = 8;
             this.lblBalance.Text = "0";
             // 
@@ -108,20 +191,20 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(452, 6);
+            this.label5.Location = new System.Drawing.Point(369, 10);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 26);
+            this.label5.Size = new System.Drawing.Size(102, 26);
             this.label5.TabIndex = 7;
-            this.label5.Text = "الرصيد";
+            this.label5.Text = "رصيد الحساب";
             // 
             // lblTransactionsCount
             // 
             this.lblTransactionsCount.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblTransactionsCount.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTransactionsCount.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTransactionsCount.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblTransactionsCount.Location = new System.Drawing.Point(17, 8);
+            this.lblTransactionsCount.Location = new System.Drawing.Point(776, 10);
             this.lblTransactionsCount.Name = "lblTransactionsCount";
-            this.lblTransactionsCount.Size = new System.Drawing.Size(61, 23);
+            this.lblTransactionsCount.Size = new System.Drawing.Size(121, 26);
             this.lblTransactionsCount.TabIndex = 6;
             this.lblTransactionsCount.Text = "0";
             // 
@@ -129,7 +212,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(84, 6);
+            this.label3.Location = new System.Drawing.Point(903, 10);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(103, 26);
             this.label3.TabIndex = 5;
@@ -138,20 +221,20 @@
             // lblOnYou
             // 
             this.lblOnYou.BackColor = System.Drawing.Color.Salmon;
-            this.lblOnYou.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOnYou.Location = new System.Drawing.Point(513, 7);
+            this.lblOnYou.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOnYou.Location = new System.Drawing.Point(486, 10);
             this.lblOnYou.Name = "lblOnYou";
-            this.lblOnYou.Size = new System.Drawing.Size(156, 23);
+            this.lblOnYou.Size = new System.Drawing.Size(230, 28);
             this.lblOnYou.TabIndex = 4;
             this.lblOnYou.Text = "0";
             // 
             // lblForYou
             // 
             this.lblForYou.BackColor = System.Drawing.Color.PaleGreen;
-            this.lblForYou.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblForYou.Location = new System.Drawing.Point(729, 8);
+            this.lblForYou.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblForYou.Location = new System.Drawing.Point(486, 42);
             this.lblForYou.Name = "lblForYou";
-            this.lblForYou.Size = new System.Drawing.Size(168, 23);
+            this.lblForYou.Size = new System.Drawing.Size(230, 30);
             this.lblForYou.TabIndex = 3;
             this.lblForYou.Text = "0";
             // 
@@ -159,7 +242,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(675, 8);
+            this.label2.Location = new System.Drawing.Point(722, 10);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 26);
             this.label2.TabIndex = 2;
@@ -169,7 +252,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(903, 6);
+            this.label1.Location = new System.Drawing.Point(722, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 26);
             this.label1.TabIndex = 1;
@@ -178,7 +261,7 @@
             // btnAddDebts
             // 
             this.btnAddDebts.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddDebts.Location = new System.Drawing.Point(1178, 3);
+            this.btnAddDebts.Location = new System.Drawing.Point(1178, 39);
             this.btnAddDebts.Name = "btnAddDebts";
             this.btnAddDebts.Size = new System.Drawing.Size(101, 33);
             this.btnAddDebts.TabIndex = 0;
@@ -192,15 +275,15 @@
             this.lblNoTransaction.Font = new System.Drawing.Font("El Messiri Medium", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNoTransaction.Location = new System.Drawing.Point(0, 46);
             this.lblNoTransaction.Name = "lblNoTransaction";
-            this.lblNoTransaction.Size = new System.Drawing.Size(1291, 474);
+            this.lblNoTransaction.Size = new System.Drawing.Size(1291, 438);
             this.lblNoTransaction.TabIndex = 2;
             this.lblNoTransaction.Text = "لا يوجد اي عمليات على هذا الحساب بهذه العملة";
             this.lblNoTransaction.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblNoTransaction.Visible = false;
-            this.lblNoTransaction.Click += new System.EventHandler(this.lblNoTransaction_Click);
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Wheat;
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.cbCurrencies);
             this.panel1.Controls.Add(this.panel3);
@@ -223,6 +306,7 @@
             // 
             // cbCurrencies
             // 
+            this.cbCurrencies.BackColor = System.Drawing.SystemColors.Info;
             this.cbCurrencies.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurrencies.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCurrencies.FormattingEnabled = true;
@@ -256,14 +340,56 @@
             this.btnClearSearch.TabIndex = 19;
             this.btnClearSearch.Text = "X";
             this.btnClearSearch.UseVisualStyleBackColor = true;
+            this.btnClearSearch.Click += new System.EventHandler(this.btnClearSearch_Click);
             // 
             // tbSearch
             // 
+            this.tbSearch.BackColor = System.Drawing.SystemColors.Info;
             this.tbSearch.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSearch.Location = new System.Drawing.Point(158, 6);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(199, 34);
             this.tbSearch.TabIndex = 16;
+            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
+            // 
+            // tsmiEdit
+            // 
+            this.tsmiEdit.Image = global::DebtsManager.Properties.Resources.Edit;
+            this.tsmiEdit.Name = "tsmiEdit";
+            this.tsmiEdit.Size = new System.Drawing.Size(214, 28);
+            this.tsmiEdit.Text = "تعديل";
+            this.tsmiEdit.Click += new System.EventHandler(this.tsmiEdit_Click);
+            // 
+            // tsmiDelete
+            // 
+            this.tsmiDelete.Image = global::DebtsManager.Properties.Resources.bin;
+            this.tsmiDelete.Name = "tsmiDelete";
+            this.tsmiDelete.Size = new System.Drawing.Size(214, 28);
+            this.tsmiDelete.Text = "حذف";
+            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
+            // 
+            // tsmiFilterIncomeDebts
+            // 
+            this.tsmiFilterIncomeDebts.Image = global::DebtsManager.Properties.Resources.icons8_income_24;
+            this.tsmiFilterIncomeDebts.Name = "tsmiFilterIncomeDebts";
+            this.tsmiFilterIncomeDebts.Size = new System.Drawing.Size(224, 28);
+            this.tsmiFilterIncomeDebts.Text = "له";
+            this.tsmiFilterIncomeDebts.Click += new System.EventHandler(this.tsmiFilterIncomeDebts_Click);
+            // 
+            // tsmiFilterOutcomeDebts
+            // 
+            this.tsmiFilterOutcomeDebts.Image = global::DebtsManager.Properties.Resources.icons8_expense_24;
+            this.tsmiFilterOutcomeDebts.Name = "tsmiFilterOutcomeDebts";
+            this.tsmiFilterOutcomeDebts.Size = new System.Drawing.Size(224, 28);
+            this.tsmiFilterOutcomeDebts.Text = "عليه";
+            this.tsmiFilterOutcomeDebts.Click += new System.EventHandler(this.tsmiFilterOutcomeDebts_Click);
+            // 
+            // tsmiShowInOtherCurrencies
+            // 
+            this.tsmiShowInOtherCurrencies.Image = global::DebtsManager.Properties.Resources.icons8_currency_32;
+            this.tsmiShowInOtherCurrencies.Name = "tsmiShowInOtherCurrencies";
+            this.tsmiShowInOtherCurrencies.Size = new System.Drawing.Size(224, 28);
+            this.tsmiShowInOtherCurrencies.Text = "عرض بعملة اخرى";
             // 
             // label4
             // 
@@ -295,6 +421,7 @@
             this.Load += new System.EventHandler(this.FrmAccount_Load);
             this.SizeChanged += new System.EventHandler(this.FrmAccount_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDebts)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.pnlFunctions.ResumeLayout(false);
             this.pnlFunctions.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -327,5 +454,17 @@
         private System.Windows.Forms.TextBox tbSearch;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFilter;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFilterIncomeDebts;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFilterOutcomeDebts;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFilterDate;
+        private System.Windows.Forms.ToolStripMenuItem خياراتToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowInOtherCurrencies;
+        private System.Windows.Forms.Label lblAllAccountsBalance;
+        private System.Windows.Forms.Label label8;
     }
 }

@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tbNotes = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbltitle = new System.Windows.Forms.Label();
             this.tbAmount = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dtpDebtDate = new System.Windows.Forms.DateTimePicker();
@@ -40,7 +41,9 @@
             this.btnAddIncomeDebt = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // tbNotes
@@ -53,16 +56,16 @@
             this.tbNotes.Size = new System.Drawing.Size(365, 90);
             this.tbNotes.TabIndex = 13;
             // 
-            // label2
+            // lbltitle
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("El Messiri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(75, 9);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(197, 63);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "مبلغ جديد";
+            this.lbltitle.AutoSize = true;
+            this.lbltitle.Font = new System.Drawing.Font("El Messiri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbltitle.Location = new System.Drawing.Point(75, 9);
+            this.lbltitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbltitle.Name = "lbltitle";
+            this.lbltitle.Size = new System.Drawing.Size(197, 63);
+            this.lbltitle.TabIndex = 11;
+            this.lbltitle.Text = "مبلغ جديد";
             // 
             // tbAmount
             // 
@@ -80,9 +83,9 @@
             this.label4.Location = new System.Drawing.Point(49, 231);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 31);
+            this.label4.Size = new System.Drawing.Size(62, 31);
             this.label4.TabIndex = 19;
-            this.label4.Text = "التاريخ:";
+            this.label4.Text = "التاريخ";
             // 
             // dtpDebtDate
             // 
@@ -103,9 +106,9 @@
             this.label5.Location = new System.Drawing.Point(49, 276);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 31);
+            this.label5.Size = new System.Drawing.Size(65, 31);
             this.label5.TabIndex = 23;
-            this.label5.Text = "العملة:";
+            this.label5.Text = "العملة";
             // 
             // cbCurrency
             // 
@@ -188,6 +191,10 @@
             this.label1.Text = "المبلغ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // FrmAddDebt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -202,7 +209,7 @@
             this.Controls.Add(this.btnAddIncomeDebt);
             this.Controls.Add(this.tbNotes);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lbltitle);
             this.Controls.Add(this.tbAmount);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -215,7 +222,9 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "إضافة مبلغ";
+            this.Load += new System.EventHandler(this.FrmAddDebt_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -225,7 +234,7 @@
         private System.Windows.Forms.Button btnAddIncomeDebt;
         private System.Windows.Forms.TextBox tbNotes;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbltitle;
         private System.Windows.Forms.TextBox tbAmount;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
@@ -234,5 +243,6 @@
         private System.Windows.Forms.Button btnAddOutcomeDebt;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbCurrency;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

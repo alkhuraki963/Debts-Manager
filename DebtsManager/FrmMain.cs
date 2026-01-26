@@ -29,7 +29,22 @@ namespace DebtsManager
         {
             pnlProgramData.Visible = false;
             pnlAccounts.Visible = true;
+            _LoadClassificationsComboBox();
             _LoadPersons();
+        }
+
+        private void _LoadClassificationsComboBox()
+        {
+            cbClassifications.Items.Clear();
+            DataTable dtClassification = clsClassification.GetAllClassifications();
+            string classification = "الكل";
+            cbClassifications.Items.Add(classification);
+            foreach (DataRow item in dtClassification.Rows)
+            {
+                classification = (string)item["ClassificationName"];
+                cbClassifications.Items.Add(classification);
+            }
+            cbClassifications.SelectedIndex = 0;
         }
 
         private void _ConfigureLvAccountsUI()
@@ -59,15 +74,15 @@ namespace DebtsManager
             lvAccounts.BeginUpdate();
         }
 
-        private void _LoadPersons()
+        private void _LoadPersons(DataTable persons)
         {
 
             _ConfigureLvAccountsUI();
-            DataTable dtAccounts = clsPerson.GetAllPersons();
+            DataTable dtPersons = persons;
 
             try
             {
-                foreach (DataRow row in dtAccounts.Rows)
+                foreach (DataRow row in dtPersons.Rows)
                 {
                     string fullName = row["fullname"].ToString();
                     decimal balance = clsPerson.CalculateTotalBalance(Convert.ToInt32(row["PersonId"]));
@@ -83,13 +98,13 @@ namespace DebtsManager
                     item.ImageIndex = 0;
 
                     // Better color scheme based on balance
-                    if (balance > 0)
+                    if (balance < 0)
                     {
                         item.BackColor = Color.FromArgb(230, 255, 230); // Very light green
                         item.ForeColor = Color.DarkGreen;
                         item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
                     }
-                    else if (balance < 0)
+                    else if (balance > 0)
                     {
                         item.BackColor = Color.FromArgb(255, 230, 230); // Very light red
                         item.ForeColor = Color.DarkRed;
@@ -116,9 +131,23 @@ namespace DebtsManager
 
             // Optional: Auto-resize columns to fit content
             lvAccounts.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            _LoadDebtOnYou(dtAccounts);
-            _LoadDebtsForYou(dtAccounts);
-            _LoadAccountsCount(dtAccounts);
+            _LoadDebtOnYou(dtPersons);
+            _LoadDebtsForYou(dtPersons);
+            _LoadAccountsCount(dtPersons);
+        }
+
+        private void _LoadPersons()
+        {
+            if (cbClassifications.SelectedIndex != 0)
+            {
+                string classificationName = cbClassifications.Text;
+                int clssificationId = clsClassification.GetClassificationId(classificationName);
+                _LoadPersons(clsPerson.GetAllPersons(clssificationId));
+            }
+            else
+            {
+                _LoadPersons(clsPerson.GetAllPersons());
+            }
         }
 
         private View _GetLvAccountsType()
@@ -134,35 +163,40 @@ namespace DebtsManager
             }
         }
 
-        private void _LoadAccountsCount(DataTable dtAccounts)
+        private void _LoadAccountsCount(DataTable dtPersons)
         {
-            lblAccountsCount.Text = dtAccounts.Rows.Count.ToString(clsSettings.NumberFormat);
+            lblAccountsCount.Text = dtPersons.Rows.Count.ToString("N0");
         }
 
-        private void _LoadDebtsForYou(DataTable dtAccounts)
+        private void _LoadDebtsForYou(DataTable dtPersons)
         {
-            try
+            decimal DebtsForYou = decimal.Zero;
+            decimal CurrentPersonBalance;
+            foreach (DataRow person in dtPersons.Rows)
             {
-                var DebtsForYou = dtAccounts.Compute("SUM(Balance)", "Balance<0");
-                lblForYou.Text = (-Convert.ToDecimal(DebtsForYou)).ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
+                CurrentPersonBalance = clsPerson.CalculateTotalBalance(Convert.ToInt32(person["PersonId"]));
+                if (CurrentPersonBalance < 0)
+                {
+                    DebtsForYou += CurrentPersonBalance;
+                }
             }
-            catch
-            {
-                lblForYou.Text = "0";
-            }
+            lblForYou.Text = (-DebtsForYou).ToString(clsSettings.NumberFormat) + clsCurrency.GetDefaultCurrency().Suffix;
+
         }
 
-        private void _LoadDebtOnYou(DataTable dtAccounts)
+        private void _LoadDebtOnYou(DataTable dtPersons)
         {
-            try
+            decimal DebtsOnYou = decimal.Zero;
+            decimal CurrentPersonBalance;
+            foreach (DataRow person in dtPersons.Rows)
             {
-                var DebtsOnYou = dtAccounts.Compute("SUM(Balance)", "Balance>0");
-                lblOnYou.Text = Convert.ToDecimal(DebtsOnYou).ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
+                CurrentPersonBalance = clsPerson.CalculateTotalBalance(Convert.ToInt32(person["PersonId"]));
+                if (CurrentPersonBalance > 0)
+                {
+                    DebtsOnYou += CurrentPersonBalance;
+                }
             }
-            catch
-            {
-                lblOnYou.Text = "0";
-            }
+            lblOnYou.Text = DebtsOnYou.ToString(clsSettings.NumberFormat) + clsCurrency.GetDefaultCurrency().Suffix;
         }
 
         private void btnMainPage_Click(object sender, EventArgs e)
@@ -196,8 +230,10 @@ namespace DebtsManager
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             FrmAddPerson frm = new FrmAddPerson();
-            frm.ShowDialog();
-            _LoadPersons();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                _LoadPersons();
+            }
         }
 
         private void lvAccounts_SelectedIndexChanged(object sender, EventArgs e)
@@ -247,12 +283,13 @@ namespace DebtsManager
             {
                 return;
             }
+
             if (MessageBox.Show("سيتم حذف هذا الحساب وجميع العمليات المرتبطة به، هل أنت متأكد؟", "تأكيد الحذف", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning
             , MessageBoxDefaultButton.Button2, MessageBoxOptions.RtlReading) == DialogResult.OK)
             {
                 int PersonId = Convert.ToInt32(lvAccounts.SelectedItems[0].Tag);
-                string PersonName = clsPerson.FindAccount(PersonId).FullName;
-                if (clsPerson.DeleteAccount(PersonId))
+                string PersonName = clsPerson.FindPerson(PersonId).FullName;
+                if (clsPerson.DeletePerson(PersonId))
                 {
                     NotifyIcon notifyIcon = new NotifyIcon();
                     notifyIcon.Text = $"تم حذف حساب {PersonName} بنجاح";
@@ -272,7 +309,7 @@ namespace DebtsManager
                 return;
             }
             int PersonId = Convert.ToInt32(lvAccounts.SelectedItems[0].Tag);
-            clsPerson Person = clsPerson.FindAccount(PersonId);
+            clsPerson Person = clsPerson.FindPerson(PersonId);
             FrmAddPerson frmAddAccount = new FrmAddPerson(Person);
 
             if (frmAddAccount.ShowDialog() == DialogResult.OK)
@@ -307,7 +344,8 @@ namespace DebtsManager
 
         private void btnSettingsPage_Click(object sender, EventArgs e)
         {
-
+            FrmSettings frmSettings = new FrmSettings();
+            frmSettings.ShowDialog();
         }
 
         private void btnAboutPage_Click(object sender, EventArgs e)
@@ -318,76 +356,34 @@ namespace DebtsManager
         private void tbSearch_TextChanged(object sender, EventArgs e)
         {
             _ConfigureLvAccountsUI();
-            DataTable dtAccounts = clsPerson.Search((sender as System.Windows.Forms.TextBox).Text);
+            DataTable dtPersons = clsPerson.Search((sender as System.Windows.Forms.TextBox).Text);
 
-            if (dtAccounts.Rows.Count == 0)
+            if (dtPersons.Rows.Count == 0)
             {
                 return;
             }
 
-
-
-            try
-            {
-                foreach (DataRow row in dtAccounts.Rows)
-                {
-                    string fullName = row["fullname"].ToString();
-                    decimal balance = 0;
-
-                    // Safely parse balance
-                    if (decimal.TryParse(row["balance"].ToString(), out balance))
-                    {
-                        // Create item
-                        ListViewItem item = new ListViewItem(fullName);
-
-                        // Format balance nicely
-                        string formattedBalance = balance.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
-                        item.SubItems.Add(formattedBalance);
-
-                        // Store ID in Tag
-                        item.Tag = row["PersonId"];
-                        item.ImageIndex = 0;
-
-                        // Better color scheme based on balance
-                        if (balance > 0)
-                        {
-                            item.BackColor = Color.FromArgb(230, 255, 230); // Very light green
-                            item.ForeColor = Color.DarkGreen;
-                            item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
-                        }
-                        else if (balance < 0)
-                        {
-                            item.BackColor = Color.FromArgb(255, 230, 230); // Very light red
-                            item.ForeColor = Color.DarkRed;
-                            item.Font = new Font(lvAccounts.Font, FontStyle.Regular);
-                        }
-                        else // Zero balance
-                        {
-                            item.BackColor = Color.FromArgb(240, 240, 240); // Light gray
-                            item.ForeColor = Color.Gray;
-                            item.Font = new Font(lvAccounts.Font, FontStyle.Italic);
-                        }
-
-                        // Add tooltip for more info
-                        item.ToolTipText = $"Name: {fullName}\nBalance: {formattedBalance}\nID: {row["PersonId"]}";
-
-                        lvAccounts.Items.Add(item);
-                    }
-                }
-            }
-            finally
-            {
-                lvAccounts.EndUpdate();
-            }
-
-            // Optional: Auto-resize columns to fit content
-            lvAccounts.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            _LoadPersons(dtPersons);
         }
 
         private void btnClearSearch_Click(object sender, EventArgs e)
         {
             tbSearch.Clear();
             _LoadPersons();
+        }
+
+        private void cbClassifications_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbClassifications.SelectedIndex != 0)
+            {
+                string classificationName = (sender as System.Windows.Forms.ComboBox).Text;
+                int clssificationId = clsClassification.GetClassificationId(classificationName);
+                _LoadPersons(clsPerson.GetAllPersons(clssificationId));
+            }
+            else
+            {
+                _LoadPersons(clsPerson.GetAllPersons());
+            }
         }
     }
 }

@@ -351,6 +351,7 @@
             // 
             // pnlAccountFunctions
             // 
+            this.pnlAccountFunctions.BackColor = System.Drawing.Color.Azure;
             this.pnlAccountFunctions.Controls.Add(this.lblAccountsCount);
             this.pnlAccountFunctions.Controls.Add(this.label3);
             this.pnlAccountFunctions.Controls.Add(this.lblOnYou);
@@ -389,9 +390,9 @@
             // 
             this.lblOnYou.BackColor = System.Drawing.Color.Salmon;
             this.lblOnYou.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOnYou.Location = new System.Drawing.Point(201, 12);
+            this.lblOnYou.Location = new System.Drawing.Point(193, 13);
             this.lblOnYou.Name = "lblOnYou";
-            this.lblOnYou.Size = new System.Drawing.Size(141, 23);
+            this.lblOnYou.Size = new System.Drawing.Size(214, 23);
             this.lblOnYou.TabIndex = 13;
             this.lblOnYou.Text = "0";
             // 
@@ -399,9 +400,9 @@
             // 
             this.lblForYou.BackColor = System.Drawing.Color.PaleGreen;
             this.lblForYou.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblForYou.Location = new System.Drawing.Point(404, 12);
+            this.lblForYou.Location = new System.Drawing.Point(467, 13);
             this.lblForYou.Name = "lblForYou";
-            this.lblForYou.Size = new System.Drawing.Size(141, 23);
+            this.lblForYou.Size = new System.Drawing.Size(214, 23);
             this.lblForYou.TabIndex = 12;
             this.lblForYou.Text = "0";
             // 
@@ -409,7 +410,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(348, 12);
+            this.label2.Location = new System.Drawing.Point(413, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 26);
             this.label2.TabIndex = 11;
@@ -419,7 +420,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(551, 12);
+            this.label1.Location = new System.Drawing.Point(687, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 26);
             this.label1.TabIndex = 10;
@@ -440,6 +441,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.Wheat;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.cbClassifications);
@@ -462,6 +464,7 @@
             // 
             // cbClassifications
             // 
+            this.cbClassifications.BackColor = System.Drawing.SystemColors.Info;
             this.cbClassifications.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbClassifications.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbClassifications.FormattingEnabled = true;
@@ -469,10 +472,11 @@
             "عام",
             "موردين",
             "عملاء"});
-            this.cbClassifications.Location = new System.Drawing.Point(6, 8);
+            this.cbClassifications.Location = new System.Drawing.Point(6, 5);
             this.cbClassifications.Name = "cbClassifications";
             this.cbClassifications.Size = new System.Drawing.Size(163, 34);
             this.cbClassifications.TabIndex = 1;
+            this.cbClassifications.SelectedIndexChanged += new System.EventHandler(this.cbClassifications_SelectedIndexChanged);
             // 
             // panel3
             // 
@@ -498,6 +502,7 @@
             // 
             // tbSearch
             // 
+            this.tbSearch.BackColor = System.Drawing.SystemColors.Info;
             this.tbSearch.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSearch.Location = new System.Drawing.Point(106, 5);
             this.tbSearch.Name = "tbSearch";

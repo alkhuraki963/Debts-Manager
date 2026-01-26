@@ -54,8 +54,28 @@ namespace DebtsManagerBusinessLayer
         {
             return clsPersonDataAccess.GetAllPersons();
         }
+        public static DataTable GetAllPersons(int ClassificationId)
+        {
+            DataTable dtPersons = GetAllPersons();
+            DataTable dtFilterdPersons = dtPersons.Clone();
+            DataRow[] FilteredPersonsRows;
+            try {
+                FilteredPersonsRows = dtPersons.Select($"ClassificationId = {ClassificationId}");
+            }
+            catch
+            {
+                return dtFilterdPersons;
+            }
 
-        public static clsPerson FindAccount(int AccountID)
+            foreach (DataRow item in FilteredPersonsRows)
+            {
+                dtFilterdPersons.ImportRow(item);
+            }
+
+            return dtFilterdPersons;
+        }
+
+        public static clsPerson FindPerson(int AccountID)
         {
             string FullName = string.Empty;
             string Phone = string.Empty;
@@ -81,8 +101,9 @@ namespace DebtsManagerBusinessLayer
             {
                 case enMode.ADD:
                     {
-                        if (_AddNewAccount())
+                        if (_AddNewPerson())
                         {
+                            _AddFirstAccount();
                             Mode = enMode.UPDATE;
                             return true;
                         }
@@ -101,6 +122,15 @@ namespace DebtsManagerBusinessLayer
             return false;
         }
 
+        private void _AddFirstAccount()
+        {
+            clsAccount firstAccount = new clsAccount();
+            firstAccount.PersonId = this.Id;
+            firstAccount.CurrencyId = clsCurrency.GetDefaultCurrency().Id;
+            firstAccount.Save();
+            firstAccount.SetAsDefaultAccount();
+        }
+
         private bool _UpdateAccount()
         {
             this.UpdatedAt = DateTime.Now;
@@ -108,20 +138,20 @@ namespace DebtsManagerBusinessLayer
                 , this.Phone, this.Email,this.ClassificationId,this.UpdatedAt);
         }
 
-        private bool _AddNewAccount()
+        private bool _AddNewPerson()
         {
             this.Id = clsPersonDataAccess.AddNewPerson(this.FullName, this.Phone, this.Email, this.ClassificationId);
             return this.Id > 0;
         }
 
-        public static bool IsAccountExists(int AccountID)
+        public static bool IsPersonExists(int AccountID)
         {
             return clsPersonDataAccess.IsPersonExists(AccountID);
         }
 
-        public static bool DeleteAccount(int AccountID)
+        public static bool DeletePerson(int AccountID)
         {
-            if (IsAccountExists(AccountID))
+            if (IsPersonExists(AccountID))
             {
                 return clsPersonDataAccess.DeletePerson(AccountID);
             }
@@ -139,7 +169,16 @@ namespace DebtsManagerBusinessLayer
         public static decimal CalculateTotalBalance(int PersonId)
         {
             List<clsAccount> PersonAccounts = clsAccount.GetAllAccounts(PersonId);
-            return 0;
+            decimal TotalBalance = decimal.Zero;
+            clsCurrency AccountCurrency;
+
+            foreach (clsAccount account in PersonAccounts)
+            {
+                AccountCurrency = clsCurrency.FindCurrency(account.CurrencyId);
+                TotalBalance += (account.Balance * AccountCurrency.ToDefaultRate);
+            }
+
+            return TotalBalance;
         }
     }
 }

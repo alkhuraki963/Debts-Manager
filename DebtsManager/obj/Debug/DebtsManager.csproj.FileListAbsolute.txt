@@ -31,7 +31,6 @@ C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\bin\Deb
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.csproj.AssemblyReference.cache
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.exe.config
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAccount.resources
-C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddAccount.resources
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddDebt.resources
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmMain.resources
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.Properties.Resources.resources
@@ -41,3 +40,8 @@ C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Deb
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.exe
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.pdb
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddPerson.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmSettings.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmCurrencyRate.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmDefaultCurrency.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmChooseFilterDates.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddNewCurrency.resources

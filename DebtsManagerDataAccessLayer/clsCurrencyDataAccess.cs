@@ -12,15 +12,15 @@ namespace DebtsManagerDataAccessLayer
 {
     public class clsCurrencyDataAccess
     {
-        public static int AddNewCurrency(string name, string country, string suffix)
+        public static int AddNewCurrency(string name, string country, string suffix,decimal toDefaultRate)
         {
             //this function will return the new Currency id if succeeded and -1 if not.
             int CurrencyId = -1;
 
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string query = @"INSERT INTO Currencies (Name, Country, Suffix)
-                             VALUES (@Name, @Country, @Suffix);
+            string query = @"INSERT INTO Currencies (CurrencyName, CurrencyCountry, CurrencySuffix, ToDefaultRate)
+                             VALUES (@Name, @Country, @Suffix,@ToDefaultRate);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -28,6 +28,7 @@ namespace DebtsManagerDataAccessLayer
             command.Parameters.AddWithValue("@Name", name);
             command.Parameters.AddWithValue("@Country", country);
             command.Parameters.AddWithValue("@Suffix", suffix);
+            command.Parameters.AddWithValue("@ToDefaultRate", toDefaultRate);
 
             try
             {
@@ -40,7 +41,7 @@ namespace DebtsManagerDataAccessLayer
                     CurrencyId = insertedID;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 // Consider logging the exception
@@ -117,7 +118,7 @@ namespace DebtsManagerDataAccessLayer
             return dt;
         }
 
-        public static bool GetCurrencyById(int currencyId, ref string name, ref string country, ref string suffix,ref bool isUsed, ref bool isDefault)
+        public static bool GetCurrencyById(int currencyId, ref string name, ref string country, ref string suffix,ref bool isUsed, ref bool isDefault,ref decimal toDefaultRate)
         {
             bool isFound = false;
 
@@ -139,11 +140,12 @@ namespace DebtsManagerDataAccessLayer
                     // The record was found
                     isFound = true;
 
-                    name = (string)reader["Name"];
-                    country = (string)reader["Country"];
-                    suffix = (string)reader["Suffix"];
+                    name = (string)reader["CurrencyName"];
+                    country = (string)reader["CurrencyCountry"];
+                    suffix = (string)reader["CurrencySuffix"];
                     isUsed = (bool)reader["IsUsed"];
                     isDefault = (bool)reader["IsDefault"];
+                    toDefaultRate = (decimal)reader["ToDefaultRate"];
                 }
                 else
                 {
@@ -153,7 +155,7 @@ namespace DebtsManagerDataAccessLayer
 
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 isFound = false;
                 // Consider logging the exception
@@ -223,7 +225,7 @@ namespace DebtsManagerDataAccessLayer
 
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 isFound = false;
@@ -235,6 +237,41 @@ namespace DebtsManagerDataAccessLayer
             }
 
             return isFound;
+        }
+
+        public static bool IsCurrencyUsedInAccounts(int currencyId)
+        {
+            bool isUsed = false;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
+
+            string query = "SELECT Found=1 FROM Accounts WHERE CurrencyId = @CurrencyId";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@CurrencyId", currencyId);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                isUsed = reader.HasRows;
+
+                reader.Close();
+            }
+            catch
+            {
+                //Console.WriteLine("Error: " + ex.Message);
+                isUsed = false;
+                // Consider logging the exception
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return isUsed;
         }
 
         public static DataTable SearchForCurrency(string text)
@@ -280,8 +317,8 @@ namespace DebtsManagerDataAccessLayer
             int rowsAffected = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string query = @"UPDATE Currencies SET IsDefault = False;
-                             UPDATE Currencies SET IsDefault = True WHERE CurrencyId = @CurrencyId";
+            string query = @"UPDATE Currencies SET IsDefault = 0;
+                             UPDATE Currencies SET IsDefault = 1 WHERE CurrencyId = @CurrencyId";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@CurrencyId", CurrencyId);
@@ -290,7 +327,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;
@@ -304,25 +341,27 @@ namespace DebtsManagerDataAccessLayer
             return (rowsAffected > 0);
         }
 
-        public static bool UpdateCurrency(int id, string name, string country, string suffix,bool IsUsed)
+        public static bool UpdateCurrency(int id, string name, string country, string suffix,bool IsUsed,decimal toDefaultRate)
         {
             int rowsAffected = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
             string query = @"UPDATE Currencies  
-                            SET Name = @Name, 
-                                Country = @Country, 
-                                Suffix = @Suffix,
-                                IsUsed = @IsUsed
+                            SET CurrencyName = @CurrencyName, 
+                                CurrencyCountry = @CurrencyCountry, 
+                                CurrencySuffix = @CurrencySuffix,
+                                IsUsed = @IsUsed,
+                                ToDefaultRate = @ToDefaultRate
                             WHERE CurrencyId = @CurrencyId";
 
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@CurrencyId", id);
-            command.Parameters.AddWithValue("@Name", name);
-            command.Parameters.AddWithValue("@Country", country);
-            command.Parameters.AddWithValue("@Suffix", suffix);
+            command.Parameters.AddWithValue("@CurrencyName", name);
+            command.Parameters.AddWithValue("@CurrencyCountry", country);
+            command.Parameters.AddWithValue("@CurrencySuffix", suffix);
             command.Parameters.AddWithValue("@IsUsed", IsUsed);
+            command.Parameters.AddWithValue("@ToDefaultRate", toDefaultRate);
 
 
             try
@@ -330,7 +369,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;

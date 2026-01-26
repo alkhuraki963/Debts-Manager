@@ -50,7 +50,7 @@ namespace DebtsManagerDataAccessLayer
                 }
             }
 
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
             }
@@ -69,8 +69,7 @@ namespace DebtsManagerDataAccessLayer
 
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
-            string query = @"Delete Persons 
-                                where PersonId = @PersonId";
+            string query = @"Delete Persons where PersonId = @PersonId;";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -83,7 +82,7 @@ namespace DebtsManagerDataAccessLayer
                 rowsAffected = command.ExecuteNonQuery();
 
             }
-            catch (Exception ex)
+            catch
             {
                 // Console.WriteLine("Error: " + ex.Message);
             }
@@ -283,7 +282,7 @@ namespace DebtsManagerDataAccessLayer
                 rowsAffected = command.ExecuteNonQuery();
 
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;

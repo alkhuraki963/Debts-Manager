@@ -22,208 +22,16 @@ namespace DebtsManager
         public FrmAccount(int PersonId)
         {
             InitializeComponent();
-            this.CurrentPerson = clsPerson.FindAccount(PersonId);
-            this.PersonAccount = new clsAccount();
-            this.CurrentCurrency = new clsCurrency();
+            this.CurrentPerson = clsPerson.FindPerson(PersonId);
         }
+
+        #region Events Handlers
 
         private void FrmAccount_Load(object sender, EventArgs e)
         {
             _LoadCurrenciesComboBox();
-            _LoadDebts();
             btnAddDebts.Location = new Point(this.Size.Width - 100, 3);
             this.Text = CurrentPerson.FullName;
-        }
-
-        private void _LoadCurrenciesComboBox()
-        {
-            cbCurrencies.Items.Clear();
-
-            foreach (DataRow Currency in clsCurrency.GetAllCurrencies().Rows)
-            {
-                cbCurrencies.Items.Add(Currency["CurrencyName"]);
-            }
-            _SelectDefaultAccountCurrency();
-        }
-
-        private void _SelectDefaultAccountCurrency()
-        {
-            int CurrencyId = clsAccount.GetDefaultAccount(CurrentPerson.Id).CurrencyId;
-            clsCurrency Currency = clsCurrency.FindCurrency(CurrencyId);
-
-            int i = 0;
-            foreach (var item in cbCurrencies.Items)
-            {
-                if (Currency.Name.Equals(item))
-                {
-                    break;
-                }
-                i++;
-            }
-            cbCurrencies.SelectedIndex = i;
-        }
-
-        private void _LoadBalance()
-        {
-            
-            decimal AccountBalance = PersonAccount.Balance;
-
-            if (AccountBalance < 0)
-            {
-                lblBalance.Text = (-AccountBalance).ToString(clsSettings.NumberFormat) + " " + CurrentCurrency.Suffix + " لك";
-                lblBalance.BackColor = Color.Green;
-            }
-            else if (AccountBalance > 0) 
-            {
-                lblBalance.Text = AccountBalance.ToString(clsSettings.NumberFormat) + " " + CurrentCurrency.Suffix + " عليك";
-                lblBalance.BackColor = Color.Red;
-            }
-            else
-            {
-                lblBalance.Text =  decimal.Zero.ToString() + " " + CurrentCurrency.Suffix;
-                lblBalance.BackColor = Color.Blue;
-            }
-        }
-
-        private void _LoadOutComeDebtsLabel(DataTable AllDebts)
-        {
-            try
-            {
-                decimal OutcomeDebts = Convert.ToDecimal(AllDebts.Compute("SUM(Amount)", "DebtType = 'OUTCOME'"));
-                lblForYou.Text = OutcomeDebts.ToString(clsSettings.NumberFormat) + CurrentCurrency.Suffix;
-                lblForYou.Refresh();
-            }
-            catch
-            {
-                lblForYou.Text = decimal.Zero + CurrentCurrency.Suffix;
-            }
-        }
-
-        private void _LoadIncomeDebtsLabel(DataTable AllDebts)
-        {
-            try
-            {
-                decimal IncomeDebts = Convert.ToDecimal(AllDebts.Compute("SUM(Amount)", "DebtType = 'INCOME'"));
-                lblOnYou.Text = IncomeDebts.ToString(clsSettings.NumberFormat) + " " + clsSettings.CurrencySuffix;
-                lblOnYou.Refresh();
-            }
-            catch
-            {
-                lblOnYou.Text = "0 " + clsSettings.CurrencySuffix;
-            }
-
-        }
-
-        private void _LoadDebts()
-        {
-
-            //dgvDebts.CellFormatting -= dgvDebts_CellFormatting;
-            //dgvDebts.Sorted -= dgvDebts_Sorted;
-            //dgvDebts.DataError -= dgvDebts_DataError;
-
-            _LoadCurrency();
-            _LoadAccount();
-
-            DataTable debtsData = clsDebt.GetAllDebts(PersonAccount.AccountId);
-
-            _LoadIncomeDebtsLabel(debtsData);
-            _LoadOutComeDebtsLabel(debtsData);
-            _LoadBalance();
-
-
-            if(debtsData.Rows.Count == 0) 
-            {
-                lblNoTransaction.Visible = true;
-                return;
-            }
-            else
-            {
-                lblNoTransaction.Visible = false;
-            }
-
-            dgvDebts.DataSource = debtsData;
-
-            _ConfigureDebtsGridView();
-            lblTransactionsCount.Text = clsDebt.GetAllDebts(CurrentPerson.Id).Rows.Count.ToString(clsSettings.NumberFormat);
-
-            //dgvDebts.CellFormatting += dgvDebts_CellFormatting;
-            //dgvDebts.Sorted += dgvDebts_Sorted;
-            //dgvDebts.DataError += dgvDebts_DataError;
-
-            dgvDebts.Refresh();
-        }
-
-        private void _LoadAccount()
-        {
-            PersonAccount = clsAccount.FindAccount(CurrentPerson.Id, CurrentCurrency.Id);
-        }
-
-        private void _LoadCurrency()
-        {
-            int CurrencyId = clsCurrency.GetCurrencyId(cbCurrencies.Text);
-            CurrentCurrency = clsCurrency.FindCurrency(CurrencyId);
-        }
-
-        private void _ConfigureDebtsGridView()
-        {
-            // Set up DataGridView properties
-            dgvDebts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvDebts.AllowUserToAddRows = false;
-            dgvDebts.ReadOnly = true;
-            dgvDebts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDebts.RowHeadersVisible = false;
-            dgvDebts.AllowUserToResizeRows = false;
-            dgvDebts.DefaultCellStyle.Font = new Font("El Messiri", 14);
-            dgvDebts.EnableHeadersVisualStyles = false;
-
-            // Format columns - wait until data is bound
-            if (dgvDebts.Columns.Count > 0)
-            {
-                // Hide unnecessary columns (keep only needed ones)
-                string[] visibleColumns = { "Notes", "Amount", "BalanceChange", "DebtDate", "DebtType" };
-
-                foreach (DataGridViewColumn column in dgvDebts.Columns)
-                {
-                    if (!visibleColumns.Contains(column.Name))
-                    {
-                        column.Visible = false;
-                    }
-                }
-
-                // Set column headers and formatting
-                if (dgvDebts.Columns.Contains("Notes"))
-                {
-                    dgvDebts.Columns["Notes"].HeaderText = "الوصف";
-                    dgvDebts.Columns["Notes"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                }
-
-                if (dgvDebts.Columns.Contains("Amount"))
-                {
-                    dgvDebts.Columns["Amount"].HeaderText = "المبلغ";
-                    dgvDebts.Columns["Amount"].DefaultCellStyle.Format = "N2";
-                    dgvDebts.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                }
-
-                if (dgvDebts.Columns.Contains("BalanceChange"))
-                {
-                    dgvDebts.Columns["BalanceChange"].HeaderText = "الرصيد";
-                    dgvDebts.Columns["BalanceChange"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                    // DO NOT set format here - we handle it in CellFormatting
-                }
-
-                if (dgvDebts.Columns.Contains("DebtDate"))
-                {
-                    dgvDebts.Columns["DebtDate"].HeaderText = "التاريخ";
-                    dgvDebts.Columns["DebtDate"].DefaultCellStyle.Format = "yyyy-MM-dd";
-                    dgvDebts.Columns["DebtDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                }
-
-                if (dgvDebts.Columns.Contains("DebtType"))
-                {
-                    dgvDebts.Columns["DebtType"].HeaderText = "النوع";
-                    dgvDebts.Columns["DebtType"].Visible = false;
-                }
-            }
         }
 
         private void dgvDebts_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -314,26 +122,427 @@ namespace DebtsManager
         {
             FrmAddDebt Frm = new FrmAddDebt(CurrentPerson.Id);
 
-            if(Frm.ShowDialog() == DialogResult.OK)
+            if (Frm.ShowDialog() == DialogResult.OK)
             {
+                _LoadCurrency();
+                _LoadAccount();
                 _LoadDebts();
             }
         }
 
         private void FrmAccount_SizeChanged(object sender, EventArgs e)
         {
-            btnAddDebts.Location = new Point(this.Size.Width-100, 3);
+            btnAddDebts.Location = new Point(this.Size.Width - 100, 3);
         }
 
         private void cbCurrencies_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _LoadCurrency();
+            _LoadAccount();
             _LoadDebts();
-            PersonAccount.SetAsDefaultAccount();
+
+            if (PersonAccount != null)
+            {
+                PersonAccount.SetAsDefaultAccount();
+            }
         }
 
-        private void lblNoTransaction_Click(object sender, EventArgs e)
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            
+
+            _LoadCurrenciesInMenuStrip();
+            if (dgvDebts.SelectedRows.Count == 0)
+            {
+                tsmiDelete.Enabled = false;
+                tsmiEdit.Enabled = false;
+            }
+            else
+            {
+                tsmiDelete.Enabled = true;
+                tsmiEdit.Enabled = true;
+            }
+
+        }
+
+        private void tbSearch_TextChanged(object sender, EventArgs e)
+        {
+            if(PersonAccount == null) return;
+
+            string SearchWord = ((TextBox)sender).Text;
+            DataTable SearchResults = clsDebt.Search(SearchWord,PersonAccount.AccountId);
+
+            if (SearchResults.Rows.Count > 0)
+            {
+                dgvDebts.DataSource = SearchResults;
+                _ConfigureDebtsGridView();
+                dgvDebts.AutoResizeRows();
+            }
+        }
+
+        private void btnClearSearch_Click(object sender, EventArgs e) => tbSearch.Clear();
+
+        private void Item_Click(object sender, EventArgs e)
+        {
+            DataTable dt = clsDebt.GetAllDebts(PersonAccount.AccountId);
+
+            decimal amount, balanceChange;
+            string fromCurrency = CurrentCurrency.Name;
+            string toCurrency = (sender as ToolStripMenuItem).Text;
+
+            clsCurrency ToCurrency = clsCurrency.FindCurrency(toCurrency);
+
+            foreach (DataRow item in dt.Rows)
+            {
+                amount = Convert.ToDecimal(item["Amount"]);
+                item["Amount"] = clsCurrency.ConvertCurrency(amount, fromCurrency, toCurrency);
+
+                balanceChange = Convert.ToDecimal(item["BalanceChange"]);
+                item["BalanceChange"] = clsCurrency.ConvertCurrency(balanceChange, fromCurrency, toCurrency);
+            }
+
+            decimal ConvertedAccountBalance = clsCurrency.ConvertCurrency(PersonAccount.Balance, fromCurrency, toCurrency);
+            decimal ConvertedAllAccountsBalance = clsCurrency.ConvertCurrency(clsPerson.CalculateTotalBalance(CurrentPerson.Id), fromCurrency, toCurrency);
+
+            _LoadDebts(dt, ToCurrency.Suffix, ConvertedAccountBalance);
+            _LoadAllAccountsBalanceLabel(ConvertedAllAccountsBalance, ToCurrency.Suffix);
+        }
+
+        private void tsmiEdit_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow DebtRow = dgvDebts.SelectedRows[0];
+            if (DebtRow == null)
+            {
+                return;
+            }
+
+            int DebtId = Convert.ToInt32(DebtRow.Cells["DebtId"].Value);
+            clsDebt debt = clsDebt.FindDebt(DebtId);
+            FrmAddDebt frm = new FrmAddDebt(debt);
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                clsUtility.NotifyUser(3000, "تم التعديل", "تم تعديل السجل بنجاح");
+                _LoadDebts();
+            }
+
+        }
+
+        private void tsmiDelete_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow DebtRow = dgvDebts.SelectedRows[0];
+
+            if (MessageBox.Show("سيتم حذف هذا السجل نهائياً، هل أنت متأكد؟", "تأكيد الحذف", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning
+            , MessageBoxDefaultButton.Button2, MessageBoxOptions.RtlReading) != DialogResult.OK)
+            {
+                return;
+            }
+
+
+            if (DebtRow == null)
+            {
+                return;
+            }
+
+            int DebtId = Convert.ToInt32(DebtRow.Cells["DebtId"].Value);
+
+            if (clsDebt.DeleteDebt(DebtId))
+            {
+                clsUtility.NotifyUser(3000, "تم الحذف", "تم حذف السجل بنجاح");
+                _LoadDebts();
+            }
+        }
+
+
+        private void tsmiFilterIncomeDebts_Click(object sender, EventArgs e)
+        {
+            if (PersonAccount == null)
+            {
+                return;
+            }
+
+            dgvDebts.DataSource = clsDebt.GetIncomeDebts(PersonAccount.AccountId);
+            _ConfigureDebtsGridView();
+        }
+
+        private void tsmiFilterOutcomeDebts_Click(object sender, EventArgs e)
+        {
+            if (PersonAccount == null)
+            {
+                return;
+            }
+
+            dgvDebts.DataSource = clsDebt.GetOutComeDebts(PersonAccount.AccountId);
+            _ConfigureDebtsGridView();
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private void _LoadCurrenciesComboBox()
+        {
+            cbCurrencies.Items.Clear();
+            DataTable UsedCurrencies = clsCurrency.GetUsedCurrencies();
+
+            foreach (DataRow Currency in UsedCurrencies.Rows)
+            {
+                cbCurrencies.Items.Add(Currency["CurrencyName"]);
+            }
+            _SelectDefaultAccountCurrency();
+        }
+
+        private void _SelectDefaultAccountCurrency()
+        {
+            int CurrencyId = clsAccount.GetDefaultAccount(CurrentPerson.Id).CurrencyId;
+            clsCurrency Currency = clsCurrency.FindCurrency(CurrencyId);
+
+            int i = 0;
+            foreach (var item in cbCurrencies.Items)
+            {
+                if (Currency.Name.Equals(item))
+                {
+                    break;
+                }
+                i++;
+            }
+            cbCurrencies.SelectedIndex = i;
+        }
+
+        private void _LoadBalanceLabel(decimal Balance, string CurrencySuffix)
+        {
+
+            decimal AccountBalance = Balance;
+
+            if (AccountBalance < 0)
+            {
+                lblBalance.Text = (-AccountBalance).ToString(clsSettings.NumberFormat) + " " + CurrencySuffix + " لك";
+                lblBalance.BackColor = Color.Green;
+            }
+            else if (AccountBalance > 0)
+            {
+                lblBalance.Text = AccountBalance.ToString(clsSettings.NumberFormat) + " " + CurrencySuffix + " عليك";
+                lblBalance.BackColor = Color.Red;
+            }
+            else
+            {
+                lblBalance.Text = decimal.Zero.ToString() + " " + CurrencySuffix;
+                lblBalance.BackColor = Color.Blue;
+            }
+        }
+
+        private void _LoadOutComeDebtsLabel(DataTable AllDebts, string CurrencySuffix)
+        {
+            try
+            {
+                decimal OutcomeDebts = Convert.ToDecimal(AllDebts.Compute("SUM(Amount)", "DebtType = 'OUTCOME'"));
+                lblForYou.Text = OutcomeDebts.ToString(clsSettings.NumberFormat) + " " + CurrencySuffix;
+                lblForYou.Refresh();
+            }
+            catch
+            {
+                lblForYou.Text = decimal.Zero + " " + CurrencySuffix;
+            }
+        }
+
+        private void _LoadIncomeDebtsLabel(DataTable AllDebts, string CurrencySuffix)
+        {
+            try
+            {
+                decimal IncomeDebts = Convert.ToDecimal(AllDebts.Compute("SUM(Amount)", "DebtType = 'INCOME'"));
+                lblOnYou.Text = IncomeDebts.ToString(clsSettings.NumberFormat) + " " + CurrencySuffix;
+                lblOnYou.Refresh();
+            }
+            catch
+            {
+                lblOnYou.Text = decimal.Zero + " " + CurrencySuffix;
+            }
+
+        }
+
+        private void _LoadDebts(DataTable data, string CurrencySuffix, decimal AccountBalance)
+        {
+
+            DataTable debtsData = data;
+
+            if (debtsData.Rows.Count == 0)
+            {
+                lblNoTransaction.Visible = true;
+
+                lblTransactionsCount.Text = "0";
+                lblBalance.Text = "0";
+                lblBalance.BackColor = Color.Blue;
+                lblAllAccountsBalance.Text = "0";
+                lblAllAccountsBalance.BackColor = Color.Blue;
+                lblForYou.Text = "0";
+                lblOnYou.Text = "0";
+
+                return;
+            }
+            else
+            {
+                lblNoTransaction.Visible = false;
+            }
+
+            dgvDebts.DataSource = debtsData;
+
+            _ConfigureDebtsGridView();
+            lblTransactionsCount.Text = debtsData.Rows.Count.ToString();
+
+            _LoadIncomeDebtsLabel(debtsData, CurrencySuffix);
+            _LoadOutComeDebtsLabel(debtsData, CurrencySuffix);
+            _LoadBalanceLabel(AccountBalance, CurrencySuffix);
+            dgvDebts.AutoResizeRows();
+            dgvDebts.Refresh();
+        }
+
+        private void _LoadAllAccountsBalanceLabel(decimal allAccountsBalance, string currencySuffix)
+        {
+            if (allAccountsBalance < 0)
+            {
+                lblAllAccountsBalance.Text = (-allAccountsBalance).ToString(clsSettings.NumberFormat) + " " + currencySuffix + " لك";
+                lblAllAccountsBalance.BackColor = Color.Green;
+            }
+            else if (allAccountsBalance > 0)
+            {
+                lblAllAccountsBalance.Text = allAccountsBalance.ToString(clsSettings.NumberFormat) + " " + currencySuffix + " عليك";
+                lblAllAccountsBalance.BackColor = Color.Red;
+            }
+            else
+            {
+                lblAllAccountsBalance.Text = decimal.Zero.ToString() + " " + currencySuffix;
+                lblAllAccountsBalance.BackColor = Color.Blue;
+            }
+        }
+
+        private void _LoadDebts()
+        {
+
+            if (PersonAccount != null)
+            {
+                _LoadDebts(clsDebt.GetAllDebts(PersonAccount.AccountId), CurrentCurrency.Suffix, PersonAccount.Balance);
+                _LoadAllAccountsBalanceLabel(clsPerson.CalculateTotalBalance(CurrentPerson.Id),clsCurrency.GetDefaultCurrency().Suffix);
+            }
+            else
+            {
+                _LoadDebts(new DataTable(), string.Empty, decimal.Zero);
+            }
+        }
+
+        private bool _LoadAccount()
+        {
+            PersonAccount = clsAccount.FindAccount(CurrentPerson.Id, CurrentCurrency.Id);
+            return PersonAccount != null;
+        }
+
+        private void _LoadCurrency()
+        {
+            int CurrencyId = clsCurrency.GetCurrencyId(cbCurrencies.Text);
+            CurrentCurrency = clsCurrency.FindCurrency(CurrencyId);
+        }
+
+        private void _ConfigureDebtsGridView()
+        {
+            // Set up DataGridView properties
+            dgvDebts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvDebts.AllowUserToAddRows = false;
+            dgvDebts.ReadOnly = true;
+            dgvDebts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDebts.RowHeadersVisible = false;
+            dgvDebts.AllowUserToResizeRows = false;
+            dgvDebts.DefaultCellStyle.Font = new Font("El Messiri", 14);
+            dgvDebts.EnableHeadersVisualStyles = false;
+
+            // Format columns - wait until data is bound
+            if (dgvDebts.Columns.Count > 0)
+            {
+                // Hide unnecessary columns (keep only needed ones)
+                string[] visibleColumns = { "Notes", "Amount", "BalanceChange", "DebtDate", "DebtType" };
+
+                foreach (DataGridViewColumn column in dgvDebts.Columns)
+                {
+                    if (!visibleColumns.Contains(column.Name))
+                    {
+                        column.Visible = false;
+                    }
+                }
+
+                // Set column headers and formatting
+                if (dgvDebts.Columns.Contains("Notes"))
+                {
+                    dgvDebts.Columns["Notes"].HeaderText = "الوصف";
+                    dgvDebts.Columns["Notes"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
+
+                if (dgvDebts.Columns.Contains("Amount"))
+                {
+                    dgvDebts.Columns["Amount"].HeaderText = "المبلغ";
+                    dgvDebts.Columns["Amount"].DefaultCellStyle.Format = "N2";
+                    dgvDebts.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
+
+                if (dgvDebts.Columns.Contains("BalanceChange"))
+                {
+                    dgvDebts.Columns["BalanceChange"].HeaderText = "الرصيد";
+                    dgvDebts.Columns["BalanceChange"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    // DO NOT set format here - we handle it in CellFormatting
+                }
+
+                if (dgvDebts.Columns.Contains("DebtDate"))
+                {
+                    dgvDebts.Columns["DebtDate"].HeaderText = "التاريخ";
+                    dgvDebts.Columns["DebtDate"].DefaultCellStyle.Format = "yyyy-MM-dd";
+                    dgvDebts.Columns["DebtDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+
+                if (dgvDebts.Columns.Contains("DebtType"))
+                {
+                    dgvDebts.Columns["DebtType"].HeaderText = "النوع";
+                    dgvDebts.Columns["DebtType"].Visible = false;
+                }
+            }
+            dgvDebts.AutoResizeRows();
+        }
+
+        private void _LoadCurrenciesInMenuStrip()
+        {
+            tsmiShowInOtherCurrencies.DropDownItems.Clear();
+
+            DataTable UsedCurrencies = clsCurrency.GetUsedCurrencies();
+            ToolStripMenuItem item;
+            foreach (DataRow Currency in UsedCurrencies.Rows)
+            {
+                item = new ToolStripMenuItem(Currency["CurrencyName"].ToString());
+                item.Click += Item_Click;
+                tsmiShowInOtherCurrencies.DropDownItems.Add(item);
+            }
+        }
+
+
+        #endregion
+
+        private void tsmiFilterDate_Click(object sender, EventArgs e)
+        {
+            if(PersonAccount == null)
+            {
+                return;
+            }
+
+            FrmChooseFilterDates frm = new FrmChooseFilterDates();
+            DateTime fromDate;
+            DateTime toDate;
+
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                fromDate = frm.FromDate;
+                toDate = frm.ToDate;
+            }
+            else
+            {
+                return;
+            }
+
+            dgvDebts.DataSource = clsDebt.FilterByDates(PersonAccount.AccountId, fromDate, toDate);
+            _ConfigureDebtsGridView();
         }
     }
 }

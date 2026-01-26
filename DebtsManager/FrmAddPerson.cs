@@ -61,7 +61,7 @@ namespace DebtsManager
                 return 0;
             }
 
-            string ClassificationName = Person.GetClassificationName();
+            string ClassificationName = clsClassification.GetClassificationName(Person.ClassificationId);
 
             int i = 0;
             foreach (string item in cbClassification.Items)
@@ -88,6 +88,7 @@ namespace DebtsManager
 
         private void btnSaveAccount_Click(object sender, EventArgs e)
         {
+            _VerifyInput();
             string FullName = tbFullName.Text;
             string Phone = tbPhone.Text;
             string Email = tbEmail.Text;
@@ -102,5 +103,9 @@ namespace DebtsManager
             this.Close();
         }
 
+        private void _VerifyInput()
+        {
+            
+        }
     }
 }
