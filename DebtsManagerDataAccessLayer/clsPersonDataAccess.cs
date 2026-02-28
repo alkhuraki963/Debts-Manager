@@ -167,7 +167,7 @@ namespace DebtsManagerDataAccessLayer
 
 
             }
-            catch (Exception ex)
+            catch
             {
                 isFound = false;
             }
@@ -200,7 +200,7 @@ namespace DebtsManagerDataAccessLayer
 
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 isFound = false;

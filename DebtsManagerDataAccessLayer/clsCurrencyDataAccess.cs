@@ -72,7 +72,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch
             {
                 // Console.WriteLine("Error: " + ex.Message);
                 // Consider logging the exception
@@ -191,7 +191,7 @@ namespace DebtsManagerDataAccessLayer
                     CurrencyId = currencyID;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 // Consider logging the exception

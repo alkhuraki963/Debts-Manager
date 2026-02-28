@@ -245,6 +245,11 @@ namespace DebtsManagerBusinessLayer
             return clsDebtDataAccess.SearchForDebt(Text,AccountId);
         }
 
+        public static DataTable GetLast5Debts()
+        {
+            return clsDebtDataAccess.GetLast5Debts();
+        }
+
         public static DataTable FilterByDates(int accountId, DateTime fromDate, DateTime toDate)
         {
             DataTable AllDebts = GetAllDebts(accountId);

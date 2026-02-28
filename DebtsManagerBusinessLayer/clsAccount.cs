@@ -96,12 +96,10 @@ namespace DebtsManagerBusinessLayer
                             return false;
                         }
                     }
-                    break;
                 case enMode.UPDATE:
                     {
                         return _UpdateAccount();
                     }
-                    break;
             }
             return false;
         }

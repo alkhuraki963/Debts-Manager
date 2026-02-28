@@ -34,7 +34,7 @@ namespace DebtsManagerDataAccessLayer
                     ClassificationId = insertedID;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 // Consider logging the exception
@@ -64,7 +64,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 // Consider logging the exception
@@ -97,7 +97,7 @@ namespace DebtsManagerDataAccessLayer
 
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine(ex.Message);
                 // Consider logging the exception
@@ -140,7 +140,7 @@ namespace DebtsManagerDataAccessLayer
 
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 isFound = false;
                 // Consider logging the exception
@@ -171,7 +171,7 @@ namespace DebtsManagerDataAccessLayer
                     ClassificationId = id;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 // Consider logging the exception
             }
@@ -201,7 +201,7 @@ namespace DebtsManagerDataAccessLayer
                     ClassificationName = result.ToString();
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 // Consider logging the exception
             }
@@ -231,7 +231,7 @@ namespace DebtsManagerDataAccessLayer
                 isFound = reader.HasRows;
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 isFound = false;
@@ -263,7 +263,7 @@ namespace DebtsManagerDataAccessLayer
                 isFound = reader.HasRows;
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 isFound = false;
@@ -295,7 +295,7 @@ namespace DebtsManagerDataAccessLayer
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch
             {
                 //Console.WriteLine("Error: " + ex.Message);
                 return false;
@@ -309,9 +309,9 @@ namespace DebtsManagerDataAccessLayer
             return (rowsAffected > 0);
         }
 
-        public static bool IsClassificationUsedInPersons(int classificationId)
+        public static bool IsClassificationEmpty(int classificationId)
         {
-            bool isUsed = false;
+            bool isEmpty = true;
 
             SqlConnection connection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
 
@@ -324,12 +324,12 @@ namespace DebtsManagerDataAccessLayer
             {
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                isUsed = reader.HasRows;
+                isEmpty = !reader.HasRows;
                 reader.Close();
             }
-            catch (Exception ex)
+            catch
             {
-                isUsed = false;
+                isEmpty = true;
                 // Consider logging the exception
             }
             finally
@@ -337,7 +337,8 @@ namespace DebtsManagerDataAccessLayer
                 connection.Close();
             }
 
-            return isUsed;
+            return isEmpty;
         }
+
     }
 }

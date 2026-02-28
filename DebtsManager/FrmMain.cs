@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,55 @@ namespace DebtsManager
         private void FrmMain_Load(object sender, EventArgs e)
         {
             btnAddAccount.Location = new Point(this.Size.Width - 150, 3);
+
+            _LoadCompanyInfo();
+            _LoadDate();
+            _LoadDashboard();
+        }
+
+        private void _LoadDate()
+        {
+            lblWeekDay.Text = clsUtility.TranslateDay(DateTime.Now.DayOfWeek.ToString());
+            lblYear.Text = DateTime.Now.Year.ToString();
+            lblMonthDay.Text = DateTime.Now.Day.ToString();
+            lblMonth.Text = DateTime.Now.Month.ToString();
+        }
+
+        private void _LoadCompanyInfo()
+        {
+            // Loading Logo
+            string companyLogo = clsSettings.GetCompanyLogo();
+
+            if (!string.IsNullOrEmpty(companyLogo))
+            {
+                using (FileStream fs = new FileStream(companyLogo, FileMode.Open, FileAccess.Read))
+                {
+                    pbCompanyIcon.Image = System.Drawing.Image.FromStream(fs);
+                }
+            }
+            else
+            {
+                pbCompanyIcon.Image = Properties.Resources.debts_manager;
+            }
+
+            // Loading Company Name
+            string companyName = clsSettings.GetCompanyName();
+
+            if (!string.IsNullOrEmpty(companyName))
+            {
+                lblCompanyName.Text = companyName;
+            }
+            else
+            {
+                lblCompanyName.Text = "شعار شركتك يمكنك تغييره";
+            }
         }
 
         private void btnAccountPage_Click(object sender, EventArgs e)
         {
             pnlProgramData.Visible = false;
+            pnlSummery.Visible = false;
+            pnlLastOperations.Visible = false;
             pnlAccounts.Visible = true;
             _LoadClassificationsComboBox();
             _LoadPersons();
@@ -90,7 +135,7 @@ namespace DebtsManager
                     ListViewItem item = new ListViewItem(fullName);
 
                     // Format balance nicely
-                    string formattedBalance = balance.ToString(clsSettings.NumberFormat) + clsCurrency.GetDefaultCurrency().Suffix;
+                    string formattedBalance = balance.ToString(clsSettings.GetNumberFormat()) + clsCurrency.GetDefaultCurrency().Suffix;
                     item.SubItems.Add(formattedBalance);
 
                     // Store ID in Tag
@@ -155,10 +200,10 @@ namespace DebtsManager
             string value = clsSettings.GetLvAccountsViewType().ToUpper();
             switch (value)
             {
-                case "LARGE ICON": return View.LargeIcon; break;
-                case "SMALL ICON": return View.SmallIcon; break;
-                case "DETAILS": return View.Details; break;
-                case "TILE": return View.Tile; break;
+                case "LARGE ICON": return View.LargeIcon;
+                case "SMALL ICON": return View.SmallIcon;
+                case "DETAILS": return View.Details;
+                case "TILE": return View.Tile;
                 default: return View.Tile;
             }
         }
@@ -180,8 +225,7 @@ namespace DebtsManager
                     DebtsForYou += CurrentPersonBalance;
                 }
             }
-            lblForYou.Text = (-DebtsForYou).ToString(clsSettings.NumberFormat) + clsCurrency.GetDefaultCurrency().Suffix;
-
+            lblForYou.Text = (-DebtsForYou).ToString(clsSettings.GetNumberFormat()) + clsCurrency.GetDefaultCurrency().Suffix;
         }
 
         private void _LoadDebtOnYou(DataTable dtPersons)
@@ -196,14 +240,79 @@ namespace DebtsManager
                     DebtsOnYou += CurrentPersonBalance;
                 }
             }
-            lblOnYou.Text = DebtsOnYou.ToString(clsSettings.NumberFormat) + clsCurrency.GetDefaultCurrency().Suffix;
+            lblOnYou.Text = DebtsOnYou.ToString(clsSettings.GetNumberFormat()) + clsCurrency.GetDefaultCurrency().Suffix;
+        }
+
+        private void _LoadDashboard()
+        {
+            DataTable dtpersons = clsPerson.GetAllPersons();
+            decimal TotalDebtsForYou = decimal.Zero;
+            decimal TotalDebtsOnYou = decimal.Zero;
+            decimal CurrentPersonBalance;
+
+            foreach (DataRow person in dtpersons.Rows)
+            {
+                CurrentPersonBalance = clsPerson.CalculateTotalBalance(Convert.ToInt32(person["PersonId"]));
+                if (CurrentPersonBalance > 0)
+                {
+                    TotalDebtsOnYou += CurrentPersonBalance;
+                }
+                else
+                {
+                    TotalDebtsForYou += CurrentPersonBalance;
+                }
+            }
+            TotalDebtsForYou = Math.Abs(TotalDebtsForYou);
+            lblTotalDebtsForYou.Text = TotalDebtsForYou.ToString(clsSettings.GetNumberFormat()) + clsCurrency.GetDefaultCurrency().Suffix;
+            lblTotalDebtsOnYou.Text = TotalDebtsOnYou.ToString(clsSettings.GetNumberFormat()) + clsCurrency.GetDefaultCurrency().Suffix;
+
+            if (TotalDebtsForYou > TotalDebtsOnYou)
+            {
+                lblTotalBalance.Text = (TotalDebtsForYou - TotalDebtsOnYou).ToString(clsSettings.GetNumberFormat())
+                    + clsCurrency.GetDefaultCurrency().Suffix
+                    + "\nلك";
+
+            }
+            else if (TotalDebtsOnYou > TotalDebtsForYou)
+            {
+                lblTotalBalance.Text = (TotalDebtsOnYou - TotalDebtsForYou).ToString(clsSettings.GetNumberFormat())
+                    + clsCurrency.GetDefaultCurrency().Suffix
+                    + "\nعليك";
+            }
+            else
+            {
+                lblTotalBalance.Text = (decimal.Zero).ToString(clsSettings.GetNumberFormat())
+                    + clsCurrency.GetDefaultCurrency().Suffix;
+            }
+
+            _LoadLastOperation();
+        }
+
+        private void _LoadLastOperation()
+        {
+            DataTable LastOperations = clsDebt.GetLast5Debts();
+            lvLastOperations.Items.Clear();
+            ListViewItem item;
+            foreach (DataRow row in LastOperations.Rows)
+            {
+                item = new ListViewItem(row["FullName"].ToString());
+                item.ForeColor = Color.Black;
+                item.ImageIndex = 0;
+                item.BackColor = row["DebtType"].ToString().Equals("INCOME") ?
+                    Color.FromArgb(230, 255, 230) : Color.FromArgb(255, 230, 230);
+                item.SubItems.Add(row["Amount"].ToString());
+                item.SubItems.Add(row["Notes"].ToString());
+                lvLastOperations.Items.Add(item);
+            }
         }
 
         private void btnMainPage_Click(object sender, EventArgs e)
         {
+            _LoadDashboard();
             pnlAccounts.Visible = false;
-            //pnlNavigation.Dock = DockStyle.None;
             pnlProgramData.Visible = true;
+            pnlSummery.Visible = true;
+            pnlLastOperations.Visible = true;
         }
 
         private void lvAccounts_DoubleClick(object sender, EventArgs e)
@@ -244,8 +353,8 @@ namespace DebtsManager
         private void FrmMain_SizeChanged(object sender, EventArgs e)
         {
             btnAddAccount.Location = new Point(this.Size.Width - 170, 3);
-            // make the panel always in the center
-            pnlCompanyInfo.Location = new Point(this.Size.Width / 2, (this.Size.Height - 37) / 2 - 165);
+            pnlSummery.Size = new Size(this.Width - 367, this.Height/3);
+
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -346,6 +455,7 @@ namespace DebtsManager
         {
             FrmSettings frmSettings = new FrmSettings();
             frmSettings.ShowDialog();
+            _LoadCompanyInfo();
         }
 
         private void btnAboutPage_Click(object sender, EventArgs e)
@@ -355,13 +465,7 @@ namespace DebtsManager
 
         private void tbSearch_TextChanged(object sender, EventArgs e)
         {
-            _ConfigureLvAccountsUI();
             DataTable dtPersons = clsPerson.Search((sender as System.Windows.Forms.TextBox).Text);
-
-            if (dtPersons.Rows.Count == 0)
-            {
-                return;
-            }
 
             _LoadPersons(dtPersons);
         }
@@ -384,6 +488,11 @@ namespace DebtsManager
             {
                 _LoadPersons(clsPerson.GetAllPersons());
             }
+        }
+
+        private void pnlSummery_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

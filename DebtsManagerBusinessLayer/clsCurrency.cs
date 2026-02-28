@@ -91,12 +91,10 @@ namespace DebtsManagerBusinessLayer
                             return false;
                         }
                     }
-                    break;
                 case enMode.UPDATE:
                     {
                         return _UpdateCurrency();
                     }
-                    break;
             }
             return false;
         }
@@ -119,14 +117,17 @@ namespace DebtsManagerBusinessLayer
 
         public static bool DeleteCurrency(int CurrencyId)
         {
-            if (IsCurrencyExists(CurrencyId))
-            {
-                return clsCurrencyDataAccess.DeleteCurrency(CurrencyId);
-            }
-            else
+            if (!IsCurrencyExists(CurrencyId))
             {
                 return false;
             }
+            if (_IsCurencyUsedInAccounts(CurrencyId))
+            {
+                return false;
+            }
+
+            return clsCurrencyDataAccess.DeleteCurrency(CurrencyId);
+
         }
 
         public static clsCurrency GetDefaultCurrency()
@@ -196,7 +197,7 @@ namespace DebtsManagerBusinessLayer
             {
                 return false;
             }
-            if (IsDefault) 
+            if (IsDefault)
             {
                 return false;
             }
@@ -207,11 +208,22 @@ namespace DebtsManagerBusinessLayer
 
         private bool _IsCurencyUsedInAccounts()
         {
-            return clsCurrencyDataAccess.IsCurrencyUsedInAccounts(this.Id);
+            return _IsCurencyUsedInAccounts(this.Id);
+        }
+
+        private static bool _IsCurencyUsedInAccounts(int currencyId)
+        {
+            return clsCurrencyDataAccess.IsCurrencyUsedInAccounts(currencyId);
         }
 
         public static decimal ConvertCurrency(decimal AmountToConvert, string FromCurrency, string ToCurrency)
         {
+
+            if (FromCurrency.Equals(ToCurrency))
+            {
+                return AmountToConvert;
+            }
+
             clsCurrency fromCurrency = FindCurrency(FromCurrency);
             clsCurrency toCurrency = FindCurrency(ToCurrency);
 

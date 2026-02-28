@@ -173,6 +173,16 @@ namespace DebtsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_classification_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-classification-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_currency_32 {
             get {
                 object obj = ResourceManager.GetObject("icons8-currency-32", resourceCulture);

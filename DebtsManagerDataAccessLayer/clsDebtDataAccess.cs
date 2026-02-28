@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DebtsManagerDataAccessLayer
 {
@@ -300,6 +301,38 @@ namespace DebtsManagerDataAccessLayer
 
             sqlCommand.Parameters.AddWithValue("@AccountId", accountId);
             sqlCommand.Parameters.AddWithValue("@Text", "%" + text + "%");
+
+            try
+            {
+                sqlConnection.Open();
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return dt;
+        }
+
+        public static DataTable GetLast5Debts()
+        {
+            DataTable dt = new DataTable();
+
+            SqlConnection sqlConnection = new SqlConnection(clsDataAccessLayerSettings.ConnectionString);
+
+            string Query = "SELECT top 5 Persons.FullName, Debts.Amount,Debts.Notes, Debts.DebtType,Debts.CreatedAt\r\nFROM     Accounts INNER JOIN\r\n                  Debts ON Accounts.AccountId = Debts.AccountId INNER JOIN\r\n                  Persons ON Accounts.PersonId = Persons.PersonId \r\nOrder by Debts.CreatedAt desc;";
+
+            SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+
 
             try
             {

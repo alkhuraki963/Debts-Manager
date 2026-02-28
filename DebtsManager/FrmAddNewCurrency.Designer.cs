@@ -40,7 +40,9 @@
             this.tbCurrencyName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // imglstButtons
@@ -138,6 +140,10 @@
             this.lblTitle.TabIndex = 24;
             this.lblTitle.Text = "عملة جديدة";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // FrmAddNewCurrency
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 26F);
@@ -160,11 +166,13 @@
             this.Name = "FrmAddNewCurrency";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.RightToLeftLayout = true;
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "عملة جديدة";
             this.Load += new System.EventHandler(this.FrmAddNewCurrency_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,5 +189,6 @@
         private System.Windows.Forms.TextBox tbCurrencyName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

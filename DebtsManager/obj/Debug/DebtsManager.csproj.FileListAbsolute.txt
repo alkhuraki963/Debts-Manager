@@ -45,3 +45,5 @@ C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Deb
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmDefaultCurrency.resources
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmChooseFilterDates.resources
 C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddNewCurrency.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmAddNewClassification.resources
+C:\studing\My Projects\Windows Forms Projects\Debts-Manager\DebtsManager\obj\Debug\DebtsManager.FrmProgressDialog.resources

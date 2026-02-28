@@ -71,16 +71,32 @@
             this.btnClearSearch = new System.Windows.Forms.Button();
             this.tbSearch = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.pnlCompanyInfo = new System.Windows.Forms.Panel();
-            this.pbCompanyIcon = new System.Windows.Forms.PictureBox();
-            this.lblCompanyName = new System.Windows.Forms.Label();
             this.pnlProgramData = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
-            this.pnlCurrentDate = new System.Windows.Forms.Panel();
-            this.lblCurrentDay = new System.Windows.Forms.Label();
-            this.lblCurrentDate = new System.Windows.Forms.Label();
-            this.lblUserName = new System.Windows.Forms.Label();
+            this.lblCompanyName = new System.Windows.Forms.Label();
+            this.pbCompanyIcon = new System.Windows.Forms.PictureBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.lblMonthDay = new System.Windows.Forms.Label();
+            this.lblMonth = new System.Windows.Forms.Label();
+            this.lblYear = new System.Windows.Forms.Label();
+            this.lblWeekDay = new System.Windows.Forms.Label();
+            this.pnlSummery = new System.Windows.Forms.Panel();
+            this.pnlBalacne = new System.Windows.Forms.Panel();
+            this.lblTotalBalance = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.pnlTotalOnYou = new System.Windows.Forms.Panel();
+            this.lblTotalDebtsOnYou = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.pnlTotalForYou = new System.Windows.Forms.Panel();
+            this.lblTotalDebtsForYou = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.pnlLastOperations = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.lvLastOperations = new System.Windows.Forms.ListView();
+            this.chAccountName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chAmount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chNotes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imglstAccountSmall = new System.Windows.Forms.ImageList(this.components);
             this.pnlNavigation.SuspendLayout();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
@@ -89,19 +105,24 @@
             this.pnlAccountFunctions.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.pnlCompanyInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCompanyIcon)).BeginInit();
             this.pnlProgramData.SuspendLayout();
-            this.pnlCurrentDate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCompanyIcon)).BeginInit();
+            this.panel4.SuspendLayout();
+            this.pnlSummery.SuspendLayout();
+            this.pnlBalacne.SuspendLayout();
+            this.pnlTotalOnYou.SuspendLayout();
+            this.pnlTotalForYou.SuspendLayout();
+            this.pnlLastOperations.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlNavigation
             // 
+            this.pnlNavigation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(52)))), ((int)(((byte)(54)))));
             this.pnlNavigation.Controls.Add(this.panel1);
             this.pnlNavigation.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlNavigation.Location = new System.Drawing.Point(275, 0);
+            this.pnlNavigation.Location = new System.Drawing.Point(0, 0);
             this.pnlNavigation.Name = "pnlNavigation";
-            this.pnlNavigation.Size = new System.Drawing.Size(987, 37);
+            this.pnlNavigation.Size = new System.Drawing.Size(940, 37);
             this.pnlNavigation.TabIndex = 0;
             // 
             // panel1
@@ -113,14 +134,16 @@
             this.panel1.Controls.Add(this.btnReportPage);
             this.panel1.Controls.Add(this.btnAccountPage);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(405, 0);
+            this.panel1.Location = new System.Drawing.Point(358, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(582, 37);
             this.panel1.TabIndex = 5;
             // 
             // btnAboutPage
             // 
-            this.btnAboutPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAboutPage.BackColor = System.Drawing.Color.White;
+            this.btnAboutPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAboutPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAboutPage.Image = global::DebtsManager.Properties.Resources.icons8_about_24;
             this.btnAboutPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAboutPage.Location = new System.Drawing.Point(10, 3);
@@ -128,12 +151,14 @@
             this.btnAboutPage.Size = new System.Drawing.Size(109, 32);
             this.btnAboutPage.TabIndex = 6;
             this.btnAboutPage.Text = "حول";
-            this.btnAboutPage.UseVisualStyleBackColor = true;
+            this.btnAboutPage.UseVisualStyleBackColor = false;
             this.btnAboutPage.Click += new System.EventHandler(this.btnAboutPage_Click);
             // 
             // btnSettingsPage
             // 
-            this.btnSettingsPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSettingsPage.BackColor = System.Drawing.Color.White;
+            this.btnSettingsPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettingsPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSettingsPage.Image = global::DebtsManager.Properties.Resources.icons8_settings_24;
             this.btnSettingsPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSettingsPage.Location = new System.Drawing.Point(125, 3);
@@ -142,12 +167,14 @@
             this.btnSettingsPage.TabIndex = 5;
             this.btnSettingsPage.Text = "إعدادات";
             this.btnSettingsPage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSettingsPage.UseVisualStyleBackColor = true;
+            this.btnSettingsPage.UseVisualStyleBackColor = false;
             this.btnSettingsPage.Click += new System.EventHandler(this.btnSettingsPage_Click);
             // 
             // btnMainPage
             // 
-            this.btnMainPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMainPage.BackColor = System.Drawing.Color.White;
+            this.btnMainPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMainPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMainPage.Image = global::DebtsManager.Properties.Resources.icons8_home_24;
             this.btnMainPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMainPage.Location = new System.Drawing.Point(470, 3);
@@ -156,12 +183,14 @@
             this.btnMainPage.TabIndex = 3;
             this.btnMainPage.Text = "الرئيسة";
             this.btnMainPage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnMainPage.UseVisualStyleBackColor = true;
+            this.btnMainPage.UseVisualStyleBackColor = false;
             this.btnMainPage.Click += new System.EventHandler(this.btnMainPage_Click);
             // 
             // btnReportPage
             // 
-            this.btnReportPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReportPage.BackColor = System.Drawing.Color.White;
+            this.btnReportPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReportPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReportPage.Image = global::DebtsManager.Properties.Resources.icons8_reports_24;
             this.btnReportPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReportPage.Location = new System.Drawing.Point(240, 3);
@@ -169,12 +198,14 @@
             this.btnReportPage.Size = new System.Drawing.Size(109, 32);
             this.btnReportPage.TabIndex = 4;
             this.btnReportPage.Text = "تقارير";
-            this.btnReportPage.UseVisualStyleBackColor = true;
+            this.btnReportPage.UseVisualStyleBackColor = false;
             this.btnReportPage.Click += new System.EventHandler(this.btnReportPage_Click);
             // 
             // btnAccountPage
             // 
-            this.btnAccountPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAccountPage.BackColor = System.Drawing.Color.White;
+            this.btnAccountPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAccountPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAccountPage.Image = global::DebtsManager.Properties.Resources.icons8_accounts_24;
             this.btnAccountPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAccountPage.Location = new System.Drawing.Point(355, 3);
@@ -183,19 +214,21 @@
             this.btnAccountPage.TabIndex = 2;
             this.btnAccountPage.Text = "الحسابات";
             this.btnAccountPage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAccountPage.UseVisualStyleBackColor = true;
+            this.btnAccountPage.UseVisualStyleBackColor = false;
             this.btnAccountPage.Click += new System.EventHandler(this.btnAccountPage_Click);
             // 
             // pnlMain
             // 
+            this.pnlMain.BackColor = System.Drawing.Color.White;
             this.pnlMain.Controls.Add(this.pnlAccounts);
-            this.pnlMain.Controls.Add(this.pnlCompanyInfo);
             this.pnlMain.Controls.Add(this.pnlNavigation);
             this.pnlMain.Controls.Add(this.pnlProgramData);
+            this.pnlMain.Controls.Add(this.pnlSummery);
+            this.pnlMain.Controls.Add(this.pnlLastOperations);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1262, 513);
+            this.pnlMain.Size = new System.Drawing.Size(1262, 586);
             this.pnlMain.TabIndex = 2;
             // 
             // pnlAccounts
@@ -204,9 +237,9 @@
             this.pnlAccounts.Controls.Add(this.pnlAccountFunctions);
             this.pnlAccounts.Controls.Add(this.panel2);
             this.pnlAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlAccounts.Location = new System.Drawing.Point(275, 37);
+            this.pnlAccounts.Location = new System.Drawing.Point(0, 37);
             this.pnlAccounts.Name = "pnlAccounts";
-            this.pnlAccounts.Size = new System.Drawing.Size(987, 476);
+            this.pnlAccounts.Size = new System.Drawing.Size(940, 549);
             this.pnlAccounts.TabIndex = 0;
             this.pnlAccounts.Visible = false;
             // 
@@ -221,11 +254,11 @@
             this.lvAccounts.Font = new System.Drawing.Font("El Messiri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvAccounts.HideSelection = false;
             this.lvAccounts.LargeImageList = this.imglstAccount;
-            this.lvAccounts.Location = new System.Drawing.Point(0, 43);
+            this.lvAccounts.Location = new System.Drawing.Point(0, 44);
             this.lvAccounts.Name = "lvAccounts";
             this.lvAccounts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lvAccounts.RightToLeftLayout = true;
-            this.lvAccounts.Size = new System.Drawing.Size(987, 390);
+            this.lvAccounts.Size = new System.Drawing.Size(940, 462);
             this.lvAccounts.SmallImageList = this.imglstAccount;
             this.lvAccounts.TabIndex = 1;
             this.lvAccounts.UseCompatibleStateImageBehavior = false;
@@ -351,7 +384,7 @@
             // 
             // pnlAccountFunctions
             // 
-            this.pnlAccountFunctions.BackColor = System.Drawing.Color.Azure;
+            this.pnlAccountFunctions.BackColor = System.Drawing.Color.White;
             this.pnlAccountFunctions.Controls.Add(this.lblAccountsCount);
             this.pnlAccountFunctions.Controls.Add(this.label3);
             this.pnlAccountFunctions.Controls.Add(this.lblOnYou);
@@ -360,16 +393,16 @@
             this.pnlAccountFunctions.Controls.Add(this.label1);
             this.pnlAccountFunctions.Controls.Add(this.btnAddAccount);
             this.pnlAccountFunctions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlAccountFunctions.Location = new System.Drawing.Point(0, 433);
+            this.pnlAccountFunctions.Location = new System.Drawing.Point(0, 506);
             this.pnlAccountFunctions.Name = "pnlAccountFunctions";
-            this.pnlAccountFunctions.Size = new System.Drawing.Size(987, 43);
+            this.pnlAccountFunctions.Size = new System.Drawing.Size(940, 43);
             this.pnlAccountFunctions.TabIndex = 0;
             // 
             // lblAccountsCount
             // 
-            this.lblAccountsCount.BackColor = System.Drawing.Color.Gray;
-            this.lblAccountsCount.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAccountsCount.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblAccountsCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.lblAccountsCount.Font = new System.Drawing.Font("El Messiri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccountsCount.ForeColor = System.Drawing.Color.White;
             this.lblAccountsCount.Location = new System.Drawing.Point(9, 12);
             this.lblAccountsCount.Name = "lblAccountsCount";
             this.lblAccountsCount.Size = new System.Drawing.Size(61, 23);
@@ -388,8 +421,9 @@
             // 
             // lblOnYou
             // 
-            this.lblOnYou.BackColor = System.Drawing.Color.Salmon;
-            this.lblOnYou.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOnYou.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.lblOnYou.Font = new System.Drawing.Font("El Messiri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOnYou.ForeColor = System.Drawing.Color.White;
             this.lblOnYou.Location = new System.Drawing.Point(193, 13);
             this.lblOnYou.Name = "lblOnYou";
             this.lblOnYou.Size = new System.Drawing.Size(214, 23);
@@ -398,8 +432,9 @@
             // 
             // lblForYou
             // 
-            this.lblForYou.BackColor = System.Drawing.Color.PaleGreen;
-            this.lblForYou.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblForYou.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(161)))), ((int)(((byte)(105)))));
+            this.lblForYou.Font = new System.Drawing.Font("El Messiri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblForYou.ForeColor = System.Drawing.Color.White;
             this.lblForYou.Location = new System.Drawing.Point(467, 13);
             this.lblForYou.Name = "lblForYou";
             this.lblForYou.Size = new System.Drawing.Size(214, 23);
@@ -429,11 +464,11 @@
             // btnAddAccount
             // 
             this.btnAddAccount.AutoSize = true;
-            this.btnAddAccount.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddAccount.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddAccount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAddAccount.Location = new System.Drawing.Point(907, 7);
             this.btnAddAccount.Name = "btnAddAccount";
-            this.btnAddAccount.Size = new System.Drawing.Size(141, 33);
+            this.btnAddAccount.Size = new System.Drawing.Size(141, 36);
             this.btnAddAccount.TabIndex = 9;
             this.btnAddAccount.Text = "إضافة حساب";
             this.btnAddAccount.UseVisualStyleBackColor = true;
@@ -441,7 +476,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Wheat;
+            this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.cbClassifications);
@@ -449,12 +484,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(987, 43);
+            this.panel2.Size = new System.Drawing.Size(940, 44);
             this.panel2.TabIndex = 2;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.White;
             this.label6.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(175, 9);
             this.label6.Name = "label6";
@@ -464,7 +500,7 @@
             // 
             // cbClassifications
             // 
-            this.cbClassifications.BackColor = System.Drawing.SystemColors.Info;
+            this.cbClassifications.BackColor = System.Drawing.Color.White;
             this.cbClassifications.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbClassifications.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbClassifications.FormattingEnabled = true;
@@ -484,25 +520,26 @@
             this.panel3.Controls.Add(this.tbSearch);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(592, 0);
+            this.panel3.Location = new System.Drawing.Point(545, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(393, 41);
+            this.panel3.Size = new System.Drawing.Size(393, 42);
             this.panel3.TabIndex = 0;
             // 
             // btnClearSearch
             // 
-            this.btnClearSearch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnClearSearch.BackColor = System.Drawing.Color.White;
+            this.btnClearSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearSearch.Location = new System.Drawing.Point(106, 5);
             this.btnClearSearch.Name = "btnClearSearch";
-            this.btnClearSearch.Size = new System.Drawing.Size(34, 32);
+            this.btnClearSearch.Size = new System.Drawing.Size(34, 34);
             this.btnClearSearch.TabIndex = 19;
             this.btnClearSearch.Text = "X";
-            this.btnClearSearch.UseVisualStyleBackColor = true;
+            this.btnClearSearch.UseVisualStyleBackColor = false;
             this.btnClearSearch.Click += new System.EventHandler(this.btnClearSearch_Click);
             // 
             // tbSearch
             // 
-            this.tbSearch.BackColor = System.Drawing.SystemColors.Info;
+            this.tbSearch.BackColor = System.Drawing.Color.White;
             this.tbSearch.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSearch.Location = new System.Drawing.Point(106, 5);
             this.tbSearch.Name = "tbSearch";
@@ -523,125 +560,303 @@
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-            // pnlCompanyInfo
-            // 
-            this.pnlCompanyInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pnlCompanyInfo.Controls.Add(this.pbCompanyIcon);
-            this.pnlCompanyInfo.Controls.Add(this.lblCompanyName);
-            this.pnlCompanyInfo.Location = new System.Drawing.Point(615, 99);
-            this.pnlCompanyInfo.Name = "pnlCompanyInfo";
-            this.pnlCompanyInfo.Size = new System.Drawing.Size(333, 330);
-            this.pnlCompanyInfo.TabIndex = 4;
-            // 
-            // pbCompanyIcon
-            // 
-            this.pbCompanyIcon.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbCompanyIcon.Image = global::DebtsManager.Properties.Resources.debts_manager;
-            this.pbCompanyIcon.Location = new System.Drawing.Point(23, 30);
-            this.pbCompanyIcon.Name = "pbCompanyIcon";
-            this.pbCompanyIcon.Size = new System.Drawing.Size(278, 221);
-            this.pbCompanyIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbCompanyIcon.TabIndex = 1;
-            this.pbCompanyIcon.TabStop = false;
-            // 
-            // lblCompanyName
-            // 
-            this.lblCompanyName.AutoSize = true;
-            this.lblCompanyName.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompanyName.Location = new System.Drawing.Point(42, 265);
-            this.lblCompanyName.Name = "lblCompanyName";
-            this.lblCompanyName.Size = new System.Drawing.Size(278, 36);
-            this.lblCompanyName.TabIndex = 2;
-            this.lblCompanyName.Text = "شعار شركتك يمكنك تغييره";
-            // 
             // pnlProgramData
             // 
-            this.pnlProgramData.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pnlProgramData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlProgramData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.pnlProgramData.Controls.Add(this.btnLogout);
-            this.pnlProgramData.Controls.Add(this.pnlCurrentDate);
-            this.pnlProgramData.Controls.Add(this.lblUserName);
-            this.pnlProgramData.Controls.Add(this.label5);
-            this.pnlProgramData.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlProgramData.Location = new System.Drawing.Point(0, 0);
+            this.pnlProgramData.Controls.Add(this.lblCompanyName);
+            this.pnlProgramData.Controls.Add(this.pbCompanyIcon);
+            this.pnlProgramData.Controls.Add(this.panel4);
+            this.pnlProgramData.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlProgramData.Location = new System.Drawing.Point(940, 0);
             this.pnlProgramData.Name = "pnlProgramData";
-            this.pnlProgramData.Size = new System.Drawing.Size(275, 513);
+            this.pnlProgramData.Size = new System.Drawing.Size(322, 586);
             this.pnlProgramData.TabIndex = 3;
             // 
             // btnLogout
             // 
-            this.btnLogout.BackColor = System.Drawing.Color.Red;
+            this.btnLogout.BackColor = System.Drawing.Color.White;
             this.btnLogout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogout.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLogout.Location = new System.Drawing.Point(0, 456);
+            this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.btnLogout.Location = new System.Drawing.Point(0, 533);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(271, 53);
+            this.btnLogout.Size = new System.Drawing.Size(322, 53);
             this.btnLogout.TabIndex = 3;
             this.btnLogout.Text = "تسجيل الخروج";
             this.btnLogout.UseVisualStyleBackColor = false;
             // 
-            // pnlCurrentDate
+            // lblCompanyName
             // 
-            this.pnlCurrentDate.BackColor = System.Drawing.Color.DarkCyan;
-            this.pnlCurrentDate.Controls.Add(this.lblCurrentDay);
-            this.pnlCurrentDate.Controls.Add(this.lblCurrentDate);
-            this.pnlCurrentDate.Font = new System.Drawing.Font("Diwani Simple Outline 2", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.pnlCurrentDate.Location = new System.Drawing.Point(12, 123);
-            this.pnlCurrentDate.Name = "pnlCurrentDate";
-            this.pnlCurrentDate.Size = new System.Drawing.Size(234, 220);
-            this.pnlCurrentDate.TabIndex = 2;
+            this.lblCompanyName.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCompanyName.ForeColor = System.Drawing.Color.White;
+            this.lblCompanyName.Location = new System.Drawing.Point(3, 122);
+            this.lblCompanyName.Name = "lblCompanyName";
+            this.lblCompanyName.Size = new System.Drawing.Size(307, 38);
+            this.lblCompanyName.TabIndex = 2;
+            this.lblCompanyName.Text = "شعار شركتك يمكنك تغييره";
+            this.lblCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblCurrentDay
+            // pbCompanyIcon
             // 
-            this.lblCurrentDay.AutoSize = true;
-            this.lblCurrentDay.Font = new System.Drawing.Font("Diwani Simple Outline 2", 36F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.lblCurrentDay.ForeColor = System.Drawing.Color.White;
-            this.lblCurrentDay.Location = new System.Drawing.Point(44, 9);
-            this.lblCurrentDay.Name = "lblCurrentDay";
-            this.lblCurrentDay.Size = new System.Drawing.Size(176, 125);
-            this.lblCurrentDay.TabIndex = 1;
-            this.lblCurrentDay.Text = "الثلاثاء";
+            this.pbCompanyIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbCompanyIcon.Image = global::DebtsManager.Properties.Resources.debts_manager;
+            this.pbCompanyIcon.Location = new System.Drawing.Point(103, 12);
+            this.pbCompanyIcon.Name = "pbCompanyIcon";
+            this.pbCompanyIcon.Size = new System.Drawing.Size(109, 107);
+            this.pbCompanyIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCompanyIcon.TabIndex = 1;
+            this.pbCompanyIcon.TabStop = false;
             // 
-            // lblCurrentDate
+            // panel4
             // 
-            this.lblCurrentDate.AutoSize = true;
-            this.lblCurrentDate.Font = new System.Drawing.Font("Diwani Simple Outline 2", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.lblCurrentDate.ForeColor = System.Drawing.Color.White;
-            this.lblCurrentDate.Location = new System.Drawing.Point(18, 125);
-            this.lblCurrentDate.Name = "lblCurrentDate";
-            this.lblCurrentDate.Size = new System.Drawing.Size(195, 84);
-            this.lblCurrentDate.TabIndex = 0;
-            this.lblCurrentDate.Text = "2026/01/06";
+            this.panel4.BackColor = System.Drawing.Color.White;
+            this.panel4.Controls.Add(this.lblMonthDay);
+            this.panel4.Controls.Add(this.lblMonth);
+            this.panel4.Controls.Add(this.lblYear);
+            this.panel4.Controls.Add(this.lblWeekDay);
+            this.panel4.Location = new System.Drawing.Point(17, 188);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(282, 295);
+            this.panel4.TabIndex = 6;
             // 
-            // lblUserName
+            // lblMonthDay
             // 
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("El Messiri SemiBold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserName.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.lblUserName.Location = new System.Drawing.Point(56, 64);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(143, 31);
-            this.lblUserName.TabIndex = 1;
-            this.lblUserName.Text = "اسم المستخدم";
+            this.lblMonthDay.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblMonthDay.BackColor = System.Drawing.SystemColors.Control;
+            this.lblMonthDay.Font = new System.Drawing.Font("Segoe Fluent Icons", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMonthDay.Location = new System.Drawing.Point(146, 183);
+            this.lblMonthDay.Name = "lblMonthDay";
+            this.lblMonthDay.Size = new System.Drawing.Size(118, 60);
+            this.lblMonthDay.TabIndex = 10;
+            this.lblMonthDay.Text = "6";
+            this.lblMonthDay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblMonth
+            // 
+            this.lblMonth.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblMonth.BackColor = System.Drawing.SystemColors.Control;
+            this.lblMonth.Font = new System.Drawing.Font("Segoe Fluent Icons", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMonth.Location = new System.Drawing.Point(21, 183);
+            this.lblMonth.Name = "lblMonth";
+            this.lblMonth.Size = new System.Drawing.Size(119, 60);
+            this.lblMonth.TabIndex = 9;
+            this.lblMonth.Text = "2";
+            this.lblMonth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblYear
+            // 
+            this.lblYear.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblYear.BackColor = System.Drawing.SystemColors.Control;
+            this.lblYear.Font = new System.Drawing.Font("Segoe Fluent Icons", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblYear.Location = new System.Drawing.Point(21, 133);
+            this.lblYear.Name = "lblYear";
+            this.lblYear.Size = new System.Drawing.Size(243, 39);
+            this.lblYear.TabIndex = 8;
+            this.lblYear.Text = "2026";
+            this.lblYear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblWeekDay
+            // 
+            this.lblWeekDay.BackColor = System.Drawing.SystemColors.Control;
+            this.lblWeekDay.Font = new System.Drawing.Font("DecoType Naskh Variants", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.lblWeekDay.Location = new System.Drawing.Point(21, 19);
+            this.lblWeekDay.Name = "lblWeekDay";
+            this.lblWeekDay.Size = new System.Drawing.Size(243, 103);
+            this.lblWeekDay.TabIndex = 6;
+            this.lblWeekDay.Text = "الثلاثاء";
+            this.lblWeekDay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlSummery
+            // 
+            this.pnlSummery.BackColor = System.Drawing.Color.Transparent;
+            this.pnlSummery.Controls.Add(this.pnlBalacne);
+            this.pnlSummery.Controls.Add(this.pnlTotalOnYou);
+            this.pnlSummery.Controls.Add(this.pnlTotalForYou);
+            this.pnlSummery.Location = new System.Drawing.Point(14, 43);
+            this.pnlSummery.Name = "pnlSummery";
+            this.pnlSummery.Size = new System.Drawing.Size(886, 219);
+            this.pnlSummery.TabIndex = 5;
+            this.pnlSummery.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlSummery_Paint);
+            // 
+            // pnlBalacne
+            // 
+            this.pnlBalacne.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pnlBalacne.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.pnlBalacne.Controls.Add(this.lblTotalBalance);
+            this.pnlBalacne.Controls.Add(this.label17);
+            this.pnlBalacne.Location = new System.Drawing.Point(44, 34);
+            this.pnlBalacne.Name = "pnlBalacne";
+            this.pnlBalacne.Size = new System.Drawing.Size(260, 147);
+            this.pnlBalacne.TabIndex = 2;
+            // 
+            // lblTotalBalance
+            // 
+            this.lblTotalBalance.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalBalance.ForeColor = System.Drawing.Color.White;
+            this.lblTotalBalance.Location = new System.Drawing.Point(3, 78);
+            this.lblTotalBalance.Name = "lblTotalBalance";
+            this.lblTotalBalance.Size = new System.Drawing.Size(254, 55);
+            this.lblTotalBalance.TabIndex = 8;
+            this.lblTotalBalance.Text = "0.0";
+            this.lblTotalBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.White;
+            this.label17.Location = new System.Drawing.Point(155, 21);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(80, 36);
+            this.label17.TabIndex = 7;
+            this.label17.Text = "رصيدك";
+            // 
+            // pnlTotalOnYou
+            // 
+            this.pnlTotalOnYou.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pnlTotalOnYou.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.pnlTotalOnYou.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlTotalOnYou.Controls.Add(this.lblTotalDebtsOnYou);
+            this.pnlTotalOnYou.Controls.Add(this.label14);
+            this.pnlTotalOnYou.Location = new System.Drawing.Point(329, 34);
+            this.pnlTotalOnYou.Name = "pnlTotalOnYou";
+            this.pnlTotalOnYou.Size = new System.Drawing.Size(260, 147);
+            this.pnlTotalOnYou.TabIndex = 1;
+            // 
+            // lblTotalDebtsOnYou
+            // 
+            this.lblTotalDebtsOnYou.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold);
+            this.lblTotalDebtsOnYou.ForeColor = System.Drawing.Color.White;
+            this.lblTotalDebtsOnYou.Location = new System.Drawing.Point(25, 72);
+            this.lblTotalDebtsOnYou.Name = "lblTotalDebtsOnYou";
+            this.lblTotalDebtsOnYou.Size = new System.Drawing.Size(208, 43);
+            this.lblTotalDebtsOnYou.TabIndex = 7;
+            this.lblTotalDebtsOnYou.Text = "0.0";
+            this.lblTotalDebtsOnYou.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(168, 19);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(63, 36);
+            this.label14.TabIndex = 6;
+            this.label14.Text = "عليك";
+            // 
+            // pnlTotalForYou
+            // 
+            this.pnlTotalForYou.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pnlTotalForYou.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(161)))), ((int)(((byte)(105)))));
+            this.pnlTotalForYou.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTotalForYou.Controls.Add(this.lblTotalDebtsForYou);
+            this.pnlTotalForYou.Controls.Add(this.label13);
+            this.pnlTotalForYou.Location = new System.Drawing.Point(614, 34);
+            this.pnlTotalForYou.Name = "pnlTotalForYou";
+            this.pnlTotalForYou.Size = new System.Drawing.Size(262, 147);
+            this.pnlTotalForYou.TabIndex = 0;
+            // 
+            // lblTotalDebtsForYou
+            // 
+            this.lblTotalDebtsForYou.BackColor = System.Drawing.Color.Transparent;
+            this.lblTotalDebtsForYou.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalDebtsForYou.ForeColor = System.Drawing.Color.White;
+            this.lblTotalDebtsForYou.Location = new System.Drawing.Point(25, 72);
+            this.lblTotalDebtsForYou.Name = "lblTotalDebtsForYou";
+            this.lblTotalDebtsForYou.Size = new System.Drawing.Size(208, 43);
+            this.lblTotalDebtsForYou.TabIndex = 6;
+            this.lblTotalDebtsForYou.Text = "0.0";
+            this.lblTotalDebtsForYou.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(182, 20);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(42, 36);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "لك";
+            // 
+            // pnlLastOperations
+            // 
+            this.pnlLastOperations.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pnlLastOperations.BackColor = System.Drawing.Color.Transparent;
+            this.pnlLastOperations.Controls.Add(this.label5);
+            this.pnlLastOperations.Controls.Add(this.lvLastOperations);
+            this.pnlLastOperations.Location = new System.Drawing.Point(14, 282);
+            this.pnlLastOperations.Name = "pnlLastOperations";
+            this.pnlLastOperations.Size = new System.Drawing.Size(886, 304);
+            this.pnlLastOperations.TabIndex = 6;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("El Messiri SemiBold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(144, 18);
+            this.label5.Font = new System.Drawing.Font("El Messiri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(380, 15);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 31);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "اهلا بك يا";
+            this.label5.Size = new System.Drawing.Size(130, 36);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "اخر العمليات";
+            // 
+            // lvLastOperations
+            // 
+            this.lvLastOperations.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lvLastOperations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvLastOperations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chAccountName,
+            this.chAmount,
+            this.chNotes});
+            this.lvLastOperations.Font = new System.Drawing.Font("El Messiri", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvLastOperations.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvLastOperations.HideSelection = false;
+            this.lvLastOperations.Location = new System.Drawing.Point(23, 62);
+            this.lvLastOperations.MultiSelect = false;
+            this.lvLastOperations.Name = "lvLastOperations";
+            this.lvLastOperations.RightToLeftLayout = true;
+            this.lvLastOperations.Scrollable = false;
+            this.lvLastOperations.Size = new System.Drawing.Size(832, 230);
+            this.lvLastOperations.SmallImageList = this.imglstAccountSmall;
+            this.lvLastOperations.TabIndex = 6;
+            this.lvLastOperations.UseCompatibleStateImageBehavior = false;
+            this.lvLastOperations.View = System.Windows.Forms.View.Details;
+            // 
+            // chAccountName
+            // 
+            this.chAccountName.Text = "اسم الحساب";
+            this.chAccountName.Width = 200;
+            // 
+            // chAmount
+            // 
+            this.chAmount.Text = "المبلغ";
+            this.chAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chAmount.Width = 300;
+            // 
+            // chNotes
+            // 
+            this.chNotes.Text = "التفاصيل";
+            this.chNotes.Width = 300;
+            // 
+            // imglstAccountSmall
+            // 
+            this.imglstAccountSmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imglstAccountSmall.ImageStream")));
+            this.imglstAccountSmall.TransparentColor = System.Drawing.Color.Transparent;
+            this.imglstAccountSmall.Images.SetKeyName(0, "accountant.png");
+            this.imglstAccountSmall.Images.SetKeyName(1, "icons8-add-48.png");
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 513);
+            this.ClientSize = new System.Drawing.Size(1262, 586);
             this.Controls.Add(this.pnlMain);
             this.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(1280, 560);
             this.Name = "FrmMain";
@@ -662,13 +877,18 @@
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.pnlCompanyInfo.ResumeLayout(false);
-            this.pnlCompanyInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCompanyIcon)).EndInit();
             this.pnlProgramData.ResumeLayout(false);
-            this.pnlProgramData.PerformLayout();
-            this.pnlCurrentDate.ResumeLayout(false);
-            this.pnlCurrentDate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCompanyIcon)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.pnlSummery.ResumeLayout(false);
+            this.pnlBalacne.ResumeLayout(false);
+            this.pnlBalacne.PerformLayout();
+            this.pnlTotalOnYou.ResumeLayout(false);
+            this.pnlTotalOnYou.PerformLayout();
+            this.pnlTotalForYou.ResumeLayout(false);
+            this.pnlTotalForYou.PerformLayout();
+            this.pnlLastOperations.ResumeLayout(false);
+            this.pnlLastOperations.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -680,18 +900,10 @@
         private System.Windows.Forms.Button btnMainPage;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Panel pnlAccounts;
-        private System.Windows.Forms.Panel pnlAccountFunctions;
         private System.Windows.Forms.ImageList imglstAccount;
         private System.Windows.Forms.ListView lvAccounts;
         private System.Windows.Forms.ColumnHeader name;
         private System.Windows.Forms.ColumnHeader balance;
-        private System.Windows.Forms.Label lblAccountsCount;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblOnYou;
-        private System.Windows.Forms.Label lblForYou;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnAddAccount;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem عرضToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiTableView;
@@ -713,12 +925,6 @@
         private System.Windows.Forms.Label lblCompanyName;
         private System.Windows.Forms.PictureBox pbCompanyIcon;
         private System.Windows.Forms.Panel pnlProgramData;
-        private System.Windows.Forms.Label lblUserName;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel pnlCurrentDate;
-        private System.Windows.Forms.Label lblCurrentDay;
-        private System.Windows.Forms.Label lblCurrentDate;
-        private System.Windows.Forms.Panel pnlCompanyInfo;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnClearSearch;
@@ -726,6 +932,36 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbClassifications;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label lblWeekDay;
+        private System.Windows.Forms.Label lblYear;
+        private System.Windows.Forms.Label lblMonthDay;
+        private System.Windows.Forms.Label lblMonth;
+        private System.Windows.Forms.Panel pnlSummery;
+        private System.Windows.Forms.Panel pnlBalacne;
+        private System.Windows.Forms.Panel pnlTotalOnYou;
+        private System.Windows.Forms.Panel pnlTotalForYou;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lblTotalDebtsOnYou;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblTotalDebtsForYou;
+        private System.Windows.Forms.Label lblTotalBalance;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ListView lvLastOperations;
+        private System.Windows.Forms.Panel pnlAccountFunctions;
+        private System.Windows.Forms.Label lblAccountsCount;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnAddAccount;
+        private System.Windows.Forms.ColumnHeader chAccountName;
+        private System.Windows.Forms.ImageList imglstAccountSmall;
+        private System.Windows.Forms.Label lblOnYou;
+        private System.Windows.Forms.Label lblForYou;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ColumnHeader chAmount;
+        private System.Windows.Forms.ColumnHeader chNotes;
+        private System.Windows.Forms.Panel pnlLastOperations;
+        private System.Windows.Forms.Label label5;
     }
 }
 

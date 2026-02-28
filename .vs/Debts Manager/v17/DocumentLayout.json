@@ -1,7 +1,28 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A691752E-FBB5-45E0-B09C-EE41582FB458}|DebtsManagerUtility\\DebtsManagerUtility.csproj|c:\\studing\\my projects\\windows forms projects\\debts-manager\\debtsmanagerutility\\clsutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A691752E-FBB5-45E0-B09C-EE41582FB458}|DebtsManagerUtility\\DebtsManagerUtility.csproj|solutionrelative:debtsmanagerutility\\clsutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF3962B8-D689-4B16-B735-FF0B8E975DD7}|DebtsManagerBusinessLayer\\DebtsManagerBusinessLayer.csproj|c:\\studing\\my projects\\windows forms projects\\debts-manager\\debtsmanagerbusinesslayer\\clssettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF3962B8-D689-4B16-B735-FF0B8E975DD7}|DebtsManagerBusinessLayer\\DebtsManagerBusinessLayer.csproj|solutionrelative:debtsmanagerbusinesslayer\\clssettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{802AC6FB-FD7D-46B4-9370-03922470003A}|DebtsManager\\DebtsManager.csproj|c:\\studing\\my projects\\windows forms projects\\debts-manager\\debtsmanager\\frmsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{802AC6FB-FD7D-46B4-9370-03922470003A}|DebtsManager\\DebtsManager.csproj|solutionrelative:debtsmanager\\frmsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{802AC6FB-FD7D-46B4-9370-03922470003A}|DebtsManager\\DebtsManager.csproj|c:\\studing\\my projects\\windows forms projects\\debts-manager\\debtsmanager\\frmsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{802AC6FB-FD7D-46B4-9370-03922470003A}|DebtsManager\\DebtsManager.csproj|solutionrelative:debtsmanager\\frmsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9105EF6C-03B1-4B68-8C83-EFB9022A5EB2}|DebtsManagerDataAccessLayer\\DebtsManagerDataAccessLayer.csproj|c:\\studing\\my projects\\windows forms projects\\debts-manager\\debtsmanagerdataaccesslayer\\clssettingsdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9105EF6C-03B1-4B68-8C83-EFB9022A5EB2}|DebtsManagerDataAccessLayer\\DebtsManagerDataAccessLayer.csproj|solutionrelative:debtsmanagerdataaccesslayer\\clssettingsdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +43,70 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "clsSettings.cs",
+              "DocumentMoniker": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManagerBusinessLayer\\clsSettings.cs",
+              "RelativeDocumentMoniker": "DebtsManagerBusinessLayer\\clsSettings.cs",
+              "ToolTip": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManagerBusinessLayer\\clsSettings.cs",
+              "RelativeToolTip": "DebtsManagerBusinessLayer\\clsSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T10:59:53.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FrmSettings.cs",
+              "DocumentMoniker": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManager\\FrmSettings.cs",
+              "RelativeDocumentMoniker": "DebtsManager\\FrmSettings.cs",
+              "ToolTip": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManager\\FrmSettings.cs",
+              "RelativeToolTip": "DebtsManager\\FrmSettings.cs",
+              "ViewState": "AgIAANMBAAAAAAAAAAAcwL0BAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T10:56:25.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FrmSettings.cs [Design]",
+              "DocumentMoniker": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManager\\FrmSettings.cs",
+              "RelativeDocumentMoniker": "DebtsManager\\FrmSettings.cs",
+              "ToolTip": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManager\\FrmSettings.cs [Design]",
+              "RelativeToolTip": "DebtsManager\\FrmSettings.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T10:56:19.132Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "clsUtility.cs",
+              "DocumentMoniker": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManagerUtility\\clsUtility.cs",
+              "RelativeDocumentMoniker": "DebtsManagerUtility\\clsUtility.cs",
+              "ToolTip": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManagerUtility\\clsUtility.cs",
+              "RelativeToolTip": "DebtsManagerUtility\\clsUtility.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T10:40:10.292Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "clsSettingsDataAccess.cs",
+              "DocumentMoniker": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManagerDataAccessLayer\\clsSettingsDataAccess.cs",
+              "RelativeDocumentMoniker": "DebtsManagerDataAccessLayer\\clsSettingsDataAccess.cs",
+              "ToolTip": "C:\\studing\\My Projects\\Windows Forms Projects\\Debts-Manager\\DebtsManagerDataAccessLayer\\clsSettingsDataAccess.cs",
+              "RelativeToolTip": "DebtsManagerDataAccessLayer\\clsSettingsDataAccess.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwFQAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T10:21:22.001Z",
+              "EditorCaption": ""
             }
           ]
         }

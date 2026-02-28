@@ -109,7 +109,7 @@ namespace DebtsManagerBusinessLayer
 
         public static bool DeleteClassification(int ClassificationId)
         {
-            if (IsClassificationExists(ClassificationId))
+            if (IsClassificationExists(ClassificationId) && IsClassificationEmpty(ClassificationId))
             {
                 return clsClassificationDataAccess.DeleteClassification(ClassificationId);
             }
@@ -117,6 +117,11 @@ namespace DebtsManagerBusinessLayer
             {
                 return false;
             }
+        }
+
+        private static bool IsClassificationEmpty(int classificationId)
+        {
+            return clsClassificationDataAccess.IsClassificationEmpty(classificationId);
         }
 
         public static int GetClassificationId(string ClassificationName)
@@ -129,9 +134,5 @@ namespace DebtsManagerBusinessLayer
             return clsClassificationDataAccess.GetClassificationName(classificationId);
         }
 
-        public static bool IsClassificationUsed(int ClassificationId)
-        {
-            return clsClassificationDataAccess.IsClassificationUsedInPersons(ClassificationId);
-        }
     }
 }

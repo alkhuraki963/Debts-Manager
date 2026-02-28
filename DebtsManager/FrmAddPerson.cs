@@ -1,4 +1,5 @@
 ﻿using DebtsManagerBusinessLayer;
+using DebtsManagerUtility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,7 +89,11 @@ namespace DebtsManager
 
         private void btnSaveAccount_Click(object sender, EventArgs e)
         {
-            _VerifyInput();
+            if(!_IsInputValid())
+            {
+                return;
+            }
+
             string FullName = tbFullName.Text;
             string Phone = tbPhone.Text;
             string Email = tbEmail.Text;
@@ -103,9 +108,34 @@ namespace DebtsManager
             this.Close();
         }
 
-        private void _VerifyInput()
+        private bool _IsInputValid()
         {
+            bool IsValid = true;
+
+            errorProvider1.Clear();
+            if (string.IsNullOrWhiteSpace(tbFullName.Text))
+            {
+                errorProvider1.SetError(tbFullName, "لا يمكنك ترك هذا الحقل فارغاً");
+                IsValid = false;
+            }
+            if (string.IsNullOrWhiteSpace(tbPhone.Text)) 
+            {
+                errorProvider1.SetError(tbPhone, "لا يمكنك ترك هذا الحقل فارغاً");
+                IsValid = false;
+            }
+            if (!tbPhone.Text.All(Char.IsDigit)) 
+            {
+                errorProvider1.SetError(tbPhone, "رقم الهاتف يجب ان يحوي ارقاماً فقط");
+                IsValid = false;
+            }
             
+            if (!string.IsNullOrEmpty(tbEmail.Text) && !clsUtility.IsEmail(tbEmail.Text)) 
+            {
+                errorProvider1.SetError(tbEmail, "البريد الألكتروني الذي ادخلته غير صحيح");
+                IsValid = false;
+            }
+
+            return IsValid;
         }
     }
 }

@@ -55,6 +55,12 @@
     <Compile Include="FrmAccount.Designer.cs">
       <DependentUpon>FrmAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmAddNewClassification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddNewClassification.Designer.cs">
+      <DependentUpon>FrmAddNewClassification.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmAddNewCurrency.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,12 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProgressDialog.Designer.cs">
+      <DependentUpon>FrmProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +119,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAccount.resx">
       <DependentUpon>FrmAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddNewClassification.resx">
+      <DependentUpon>FrmAddNewClassification.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAddNewCurrency.resx">
       <DependentUpon>FrmAddNewCurrency.cs</DependentUpon>
@@ -128,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProgressDialog.resx">
+      <DependentUpon>FrmProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
@@ -178,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="debts_manager.ico" />
+    <None Include="Resources\icons8-classification-24.png" />
     <None Include="Resources\icons8-currency-32.png" />
     <None Include="Resources\user.png" />
     <None Include="Resources\icons8-info-16.png" />

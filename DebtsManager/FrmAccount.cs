@@ -140,6 +140,9 @@ namespace DebtsManager
             _LoadCurrency();
             _LoadAccount();
             _LoadDebts();
+            decimal TotalPersonBalance = clsPerson.CalculateTotalBalance(CurrentPerson.Id);
+            decimal ConvertedBalance = clsCurrency.ConvertCurrency(TotalPersonBalance, clsCurrency.GetDefaultCurrency().Name, CurrentCurrency.Name);
+            _LoadAllAccountsBalanceLabel(ConvertedBalance,CurrentCurrency.Suffix);
 
             if (PersonAccount != null)
             {
@@ -171,12 +174,9 @@ namespace DebtsManager
             string SearchWord = ((TextBox)sender).Text;
             DataTable SearchResults = clsDebt.Search(SearchWord,PersonAccount.AccountId);
 
-            if (SearchResults.Rows.Count > 0)
-            {
-                dgvDebts.DataSource = SearchResults;
-                _ConfigureDebtsGridView();
-                dgvDebts.AutoResizeRows();
-            }
+            dgvDebts.DataSource = SearchResults;
+            _ConfigureDebtsGridView();
+            dgvDebts.AutoResizeRows();
         }
 
         private void btnClearSearch_Click(object sender, EventArgs e) => tbSearch.Clear();
@@ -201,9 +201,10 @@ namespace DebtsManager
             }
 
             decimal ConvertedAccountBalance = clsCurrency.ConvertCurrency(PersonAccount.Balance, fromCurrency, toCurrency);
-            decimal ConvertedAllAccountsBalance = clsCurrency.ConvertCurrency(clsPerson.CalculateTotalBalance(CurrentPerson.Id), fromCurrency, toCurrency);
+            decimal ConvertedAllAccountsBalance = clsCurrency.ConvertCurrency(clsPerson.CalculateTotalBalance(CurrentPerson.Id),
+                clsCurrency.GetDefaultCurrency().Name, toCurrency);
 
-            _LoadDebts(dt, ToCurrency.Suffix, ConvertedAccountBalance);
+            _LoadDebts(dt, ToCurrency.Suffix, ConvertedAccountBalance, ConvertedAllAccountsBalance);
             _LoadAllAccountsBalanceLabel(ConvertedAllAccountsBalance, ToCurrency.Suffix);
         }
 
@@ -221,7 +222,7 @@ namespace DebtsManager
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
-                clsUtility.NotifyUser(3000, "تم التعديل", "تم تعديل السجل بنجاح");
+                clsUtility.NotifyUser("تم التعديل", "تم تعديل السجل بنجاح");
                 _LoadDebts();
             }
 
@@ -247,11 +248,10 @@ namespace DebtsManager
 
             if (clsDebt.DeleteDebt(DebtId))
             {
-                clsUtility.NotifyUser(3000, "تم الحذف", "تم حذف السجل بنجاح");
+                clsUtility.NotifyUser("تم الحذف", "تم حذف السجل بنجاح");
                 _LoadDebts();
             }
         }
-
 
         private void tsmiFilterIncomeDebts_Click(object sender, EventArgs e)
         {
@@ -272,6 +272,31 @@ namespace DebtsManager
             }
 
             dgvDebts.DataSource = clsDebt.GetOutComeDebts(PersonAccount.AccountId);
+            _ConfigureDebtsGridView();
+        }
+
+        private void tsmiFilterDate_Click(object sender, EventArgs e)
+        {
+            if (PersonAccount == null)
+            {
+                return;
+            }
+
+            FrmChooseFilterDates frm = new FrmChooseFilterDates();
+            DateTime fromDate;
+            DateTime toDate;
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                fromDate = frm.FromDate;
+                toDate = frm.ToDate;
+            }
+            else
+            {
+                return;
+            }
+
+            dgvDebts.DataSource = clsDebt.FilterByDates(PersonAccount.AccountId, fromDate, toDate);
             _ConfigureDebtsGridView();
         }
 
@@ -315,18 +340,18 @@ namespace DebtsManager
 
             if (AccountBalance < 0)
             {
-                lblBalance.Text = (-AccountBalance).ToString(clsSettings.NumberFormat) + " " + CurrencySuffix + " لك";
-                lblBalance.BackColor = Color.Green;
+                lblBalance.Text = (-AccountBalance).ToString(clsSettings.GetNumberFormat()) + " " + CurrencySuffix + " لك";
+                lblBalance.BackColor = Color.FromArgb(56, 161, 105);
             }
             else if (AccountBalance > 0)
             {
-                lblBalance.Text = AccountBalance.ToString(clsSettings.NumberFormat) + " " + CurrencySuffix + " عليك";
-                lblBalance.BackColor = Color.Red;
+                lblBalance.Text = AccountBalance.ToString(clsSettings.GetNumberFormat()) + " " + CurrencySuffix + " عليك";
+                lblBalance.BackColor = Color.FromArgb(231, 76, 60);
             }
             else
             {
                 lblBalance.Text = decimal.Zero.ToString() + " " + CurrencySuffix;
-                lblBalance.BackColor = Color.Blue;
+                lblBalance.BackColor = Color.FromArgb(44, 62, 80);
             }
         }
 
@@ -335,7 +360,7 @@ namespace DebtsManager
             try
             {
                 decimal OutcomeDebts = Convert.ToDecimal(AllDebts.Compute("SUM(Amount)", "DebtType = 'OUTCOME'"));
-                lblForYou.Text = OutcomeDebts.ToString(clsSettings.NumberFormat) + " " + CurrencySuffix;
+                lblForYou.Text = OutcomeDebts.ToString(clsSettings.GetNumberFormat()) + " " + CurrencySuffix;
                 lblForYou.Refresh();
             }
             catch
@@ -349,7 +374,7 @@ namespace DebtsManager
             try
             {
                 decimal IncomeDebts = Convert.ToDecimal(AllDebts.Compute("SUM(Amount)", "DebtType = 'INCOME'"));
-                lblOnYou.Text = IncomeDebts.ToString(clsSettings.NumberFormat) + " " + CurrencySuffix;
+                lblOnYou.Text = IncomeDebts.ToString(clsSettings.GetNumberFormat()) + " " + CurrencySuffix;
                 lblOnYou.Refresh();
             }
             catch
@@ -359,7 +384,8 @@ namespace DebtsManager
 
         }
 
-        private void _LoadDebts(DataTable data, string CurrencySuffix, decimal AccountBalance)
+        private void _LoadDebts(DataTable data, string CurrencySuffix, 
+            decimal AccountBalance, decimal allAccountsBalance)
         {
 
             DataTable debtsData = data;
@@ -391,6 +417,7 @@ namespace DebtsManager
             _LoadIncomeDebtsLabel(debtsData, CurrencySuffix);
             _LoadOutComeDebtsLabel(debtsData, CurrencySuffix);
             _LoadBalanceLabel(AccountBalance, CurrencySuffix);
+            _LoadAllAccountsBalanceLabel(allAccountsBalance, CurrencySuffix);
             dgvDebts.AutoResizeRows();
             dgvDebts.Refresh();
         }
@@ -399,18 +426,18 @@ namespace DebtsManager
         {
             if (allAccountsBalance < 0)
             {
-                lblAllAccountsBalance.Text = (-allAccountsBalance).ToString(clsSettings.NumberFormat) + " " + currencySuffix + " لك";
-                lblAllAccountsBalance.BackColor = Color.Green;
+                lblAllAccountsBalance.Text = (-allAccountsBalance).ToString(clsSettings.GetNumberFormat()) + " " + currencySuffix + " لك";
+                lblAllAccountsBalance.BackColor = Color.FromArgb(56, 161, 105);
             }
             else if (allAccountsBalance > 0)
             {
-                lblAllAccountsBalance.Text = allAccountsBalance.ToString(clsSettings.NumberFormat) + " " + currencySuffix + " عليك";
-                lblAllAccountsBalance.BackColor = Color.Red;
+                lblAllAccountsBalance.Text = allAccountsBalance.ToString(clsSettings.GetNumberFormat()) + " " + currencySuffix + " عليك";
+                lblAllAccountsBalance.BackColor = Color.FromArgb(231, 76, 60);
             }
             else
             {
                 lblAllAccountsBalance.Text = decimal.Zero.ToString() + " " + currencySuffix;
-                lblAllAccountsBalance.BackColor = Color.Blue;
+                lblAllAccountsBalance.BackColor = Color.FromArgb(44, 62, 80);
             }
         }
 
@@ -419,12 +446,13 @@ namespace DebtsManager
 
             if (PersonAccount != null)
             {
-                _LoadDebts(clsDebt.GetAllDebts(PersonAccount.AccountId), CurrentCurrency.Suffix, PersonAccount.Balance);
-                _LoadAllAccountsBalanceLabel(clsPerson.CalculateTotalBalance(CurrentPerson.Id),clsCurrency.GetDefaultCurrency().Suffix);
+                _LoadDebts(clsDebt.GetAllDebts(PersonAccount.AccountId),
+                    CurrentCurrency.Suffix, PersonAccount.Balance,
+                    clsPerson.CalculateTotalBalance(PersonAccount.PersonId));
             }
             else
             {
-                _LoadDebts(new DataTable(), string.Empty, decimal.Zero);
+                _LoadDebts(new DataTable(), string.Empty, decimal.Zero,decimal.Zero);
             }
         }
 
@@ -476,7 +504,7 @@ namespace DebtsManager
                 if (dgvDebts.Columns.Contains("Amount"))
                 {
                     dgvDebts.Columns["Amount"].HeaderText = "المبلغ";
-                    dgvDebts.Columns["Amount"].DefaultCellStyle.Format = "N2";
+                    dgvDebts.Columns["Amount"].DefaultCellStyle.Format = clsSettings.GetNumberFormat();
                     dgvDebts.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 }
 
@@ -520,29 +548,5 @@ namespace DebtsManager
 
         #endregion
 
-        private void tsmiFilterDate_Click(object sender, EventArgs e)
-        {
-            if(PersonAccount == null)
-            {
-                return;
-            }
-
-            FrmChooseFilterDates frm = new FrmChooseFilterDates();
-            DateTime fromDate;
-            DateTime toDate;
-
-            if(frm.ShowDialog() == DialogResult.OK)
-            {
-                fromDate = frm.FromDate;
-                toDate = frm.ToDate;
-            }
-            else
-            {
-                return;
-            }
-
-            dgvDebts.DataSource = clsDebt.FilterByDates(PersonAccount.AccountId, fromDate, toDate);
-            _ConfigureDebtsGridView();
-        }
     }
 }
