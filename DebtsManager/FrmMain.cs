@@ -446,11 +446,6 @@ namespace DebtsManager
             }
         }
 
-        private void btnReportPage_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnSettingsPage_Click(object sender, EventArgs e)
         {
             FrmSettings frmSettings = new FrmSettings();

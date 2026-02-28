@@ -35,7 +35,6 @@
             this.btnAboutPage = new System.Windows.Forms.Button();
             this.btnSettingsPage = new System.Windows.Forms.Button();
             this.btnMainPage = new System.Windows.Forms.Button();
-            this.btnReportPage = new System.Windows.Forms.Button();
             this.btnAccountPage = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlAccounts = new System.Windows.Forms.Panel();
@@ -131,7 +130,6 @@
             this.panel1.Controls.Add(this.btnAboutPage);
             this.panel1.Controls.Add(this.btnSettingsPage);
             this.panel1.Controls.Add(this.btnMainPage);
-            this.panel1.Controls.Add(this.btnReportPage);
             this.panel1.Controls.Add(this.btnAccountPage);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(358, 0);
@@ -146,7 +144,7 @@
             this.btnAboutPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAboutPage.Image = global::DebtsManager.Properties.Resources.icons8_about_24;
             this.btnAboutPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAboutPage.Location = new System.Drawing.Point(10, 3);
+            this.btnAboutPage.Location = new System.Drawing.Point(126, 3);
             this.btnAboutPage.Name = "btnAboutPage";
             this.btnAboutPage.Size = new System.Drawing.Size(109, 32);
             this.btnAboutPage.TabIndex = 6;
@@ -161,7 +159,7 @@
             this.btnSettingsPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSettingsPage.Image = global::DebtsManager.Properties.Resources.icons8_settings_24;
             this.btnSettingsPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSettingsPage.Location = new System.Drawing.Point(125, 3);
+            this.btnSettingsPage.Location = new System.Drawing.Point(241, 3);
             this.btnSettingsPage.Name = "btnSettingsPage";
             this.btnSettingsPage.Size = new System.Drawing.Size(109, 32);
             this.btnSettingsPage.TabIndex = 5;
@@ -185,21 +183,6 @@
             this.btnMainPage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnMainPage.UseVisualStyleBackColor = false;
             this.btnMainPage.Click += new System.EventHandler(this.btnMainPage_Click);
-            // 
-            // btnReportPage
-            // 
-            this.btnReportPage.BackColor = System.Drawing.Color.White;
-            this.btnReportPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReportPage.Font = new System.Drawing.Font("El Messiri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReportPage.Image = global::DebtsManager.Properties.Resources.icons8_reports_24;
-            this.btnReportPage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReportPage.Location = new System.Drawing.Point(240, 3);
-            this.btnReportPage.Name = "btnReportPage";
-            this.btnReportPage.Size = new System.Drawing.Size(109, 32);
-            this.btnReportPage.TabIndex = 4;
-            this.btnReportPage.Text = "تقارير";
-            this.btnReportPage.UseVisualStyleBackColor = false;
-            this.btnReportPage.Click += new System.EventHandler(this.btnReportPage_Click);
             // 
             // btnAccountPage
             // 
@@ -919,7 +902,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiIncomeAccounts;
         private System.Windows.Forms.Button btnAboutPage;
         private System.Windows.Forms.Button btnSettingsPage;
-        private System.Windows.Forms.Button btnReportPage;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbSearch;
         private System.Windows.Forms.Label lblCompanyName;
